@@ -26,8 +26,8 @@ public class NdosiTests extends Base {
         loginPage.enterEmailAddress("makes@gmail.com");
     }
 
-//    @AfterTest
-//    public void closeBrowser() {
-//        driver.quit();
-//    }
+    @AfterTest
+    public void closeBrowser() {
+        driver.quit();
+    }
 }
