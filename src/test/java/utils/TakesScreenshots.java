@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class TakesScreenshots {
 
-    private static String screenshotDir = System.getProperty("user.dir")+"/Screenshots";
+    private static String screenshotDir = System.getProperty("user.dir")+"/Screenshots"+"/NdosiTestAutomation";
     public void takesSnapShot(WebDriver driver, String screenshotName) {
 
         TakesScreenshot takesScreenshot = (TakesScreenshot) driver;

@@ -8,17 +8,19 @@ public class NdosiTests extends Base {
     @Test
     public void verifyHomePageIsDisplayedTests() {
         homePage.verifyHomePageIsDisplayed();
-//        takesScreenshots.takesSnapShot(driver, "Home Page");
+        takesScreenshots.takesSnapShot(driver, "Home Page");
     }
 
     @Test(dependsOnMethods = "verifyHomePageIsDisplayedTests")
     public void clickLearningMaterialTests() {
         homePage.clickLearningMaterial();
+        takesScreenshots.takesSnapShot(driver, "Learning Material Page");
     }
 
     @Test(dependsOnMethods = "clickLearningMaterialTests")
     public void verifyLoginPageIsDisplayedTests() {
         loginPage.verifyLoginPageIsDisplayed();
+        takesScreenshots.takesSnapShot(driver, "Login Page");
     }
 
     @Test(dependsOnMethods = "verifyLoginPageIsDisplayedTests")
@@ -29,6 +31,7 @@ public class NdosiTests extends Base {
     @Test(dependsOnMethods = "enterEmailAddressTests")
     public void incorrectPasswordTest() {
         loginPage.enterPassword("123");
+        takesScreenshots.takesSnapShot(driver, "Login Page with Incorrect Password");
     }
 
     @Test(dependsOnMethods = "incorrectPasswordTest")
@@ -39,6 +42,7 @@ public class NdosiTests extends Base {
     @Test(dependsOnMethods = "clickLoginWithInvalidInvalidPasswordTest")
     public void acceptLoginAlertTest() {
         loginPage.loginFailedAcceptLoginAlert();
+        takesScreenshots.takesSnapShot(driver, "Login Alert Accepted");
     }
 
     @Test(dependsOnMethods = "acceptLoginAlertTest")
@@ -59,12 +63,14 @@ public class NdosiTests extends Base {
     @Test(dependsOnMethods = "clickLoginButtonTests")
     public void missingRequiredFieldsAlert() {
         loginPage.missingRequiredFieldsAlert();
+        takesScreenshots.takesSnapShot(driver, "Missing Required Fields Alert Accepted");
     }
 
     @Test(dependsOnMethods = "missingRequiredFieldsAlert")
     public void enterEmailAddressWithPasswordAfterCleanTest() {
         enterEmailAddressTests();
         enterPasswordTests();
+        takesScreenshots.takesSnapShot(driver, "Login Page with Email and Password");
     }
 
     @Test(dependsOnMethods = "enterEmailAddressWithPasswordAfterCleanTest")
