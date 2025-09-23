@@ -72,9 +72,8 @@ public class NdosiTests extends Base {
         loginPage.clickLoginButton();
     }
 
-
-//    @AfterTest
-//    public void closeBrowser() {
-//        driver.quit();
-//    }
+    @AfterTest
+    public void closeBrowser() {
+        driver.quit();
+    }
 }
