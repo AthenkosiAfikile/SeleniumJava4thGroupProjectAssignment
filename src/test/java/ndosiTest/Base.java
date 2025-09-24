@@ -3,6 +3,7 @@ package ndosiTest;
 import screens.HomePage;
 import screens.LandingPage;
 import screens.LoginPage;
+import screens.RegistrationPage;
 import utils.BrowserFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -15,6 +16,7 @@ public class Base {
     HomePage homePage= PageFactory.initElements(driver,HomePage.class);
     LoginPage loginPage= PageFactory.initElements(driver, LoginPage.class);
     LandingPage landingPage= PageFactory.initElements(driver, LandingPage.class);
+    RegistrationPage registrationPage= PageFactory.initElements(driver, RegistrationPage.class);
     TakesScreenshots takesScreenshots = new TakesScreenshots();
 
 }
