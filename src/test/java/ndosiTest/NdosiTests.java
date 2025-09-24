@@ -1,8 +1,12 @@
 package ndosiTest;
 
+import extentReport.Listener;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+
+@Listeners(Listener.class)
 public class NdosiTests extends Base {
 
     @Test

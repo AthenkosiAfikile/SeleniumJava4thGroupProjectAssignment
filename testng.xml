@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="TestSuite">
+    <listeners>
+        <listener class-name="extentReport.Listener" />
+    </listeners>
+    <test name="NdosiTests">
+        <classes>
+            <class name="ndosiTest.NdosiTests" />
+        </classes>
+    </test>
+</suite>

@@ -7,7 +7,7 @@ import java.io.File;
 
 public class ExtentReportManager {
 
-    private static final String reportDir = System.getProperty("user.dir") + "/Reports";
+    private static final String reportDir = System.getProperty("user.dir") + "/Reports"+"/Ndosi Test Automation Report";
 
     private static ExtentReports extentReports;
     private static ExtentSparkReporter extentSparkReporter;
