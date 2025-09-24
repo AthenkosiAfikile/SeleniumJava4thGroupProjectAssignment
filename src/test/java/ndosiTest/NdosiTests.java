@@ -4,6 +4,7 @@ import extentReport.Listener;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+import screens.LoginPage;
 
 
 @Listeners(Listener.class)
@@ -72,7 +73,6 @@ public class NdosiTests extends Base {
 
     @Test(dependsOnMethods = "missingRequiredFieldsAlert")
     public void enterEmailAddressWithPasswordAfterCleanTest() {
-        enterEmailAddressTests();
         enterPasswordTests();
         takesScreenshots.takesSnapShot(driver, "Login Page with Email and Password");
     }
@@ -81,9 +81,51 @@ public class NdosiTests extends Base {
     public void clickLoginButtonAfterCleanEmailFieldTests() {
         loginPage.clickLoginButton();
     }
-
-    @AfterTest
-    public void closeBrowser() {
-        driver.quit();
+    @Test(dependsOnMethods = "clickLoginButtonAfterCleanEmailFieldTests")
+    public void invalidCredentialsAlertTest() {
+        loginPage.InvalidCredentialsAlert();
+        takesScreenshots.takesSnapShot(driver, "Invalid Credentials Alert Accepted");
     }
+    @Test(dependsOnMethods = "invalidCredentialsAlertTest")
+    public void cleanEmailFieldTest() {
+        loginPage.clearEmailTextField();
+        loginPage.enterEmailAddress("testuser");
+    }
+    @Test(dependsOnMethods = "cleanEmailFieldTest")
+    public void enterPasswordAfterCleanEmailFieldTest() {
+        loginPage.enterPassword("password123");
+        takesScreenshots.takesSnapShot(driver, "Login Page with Corrected Email and Password");
+    }
+    @Test(dependsOnMethods = "enterPasswordAfterCleanEmailFieldTest")
+    public void clickLoginButtonWithCorrectedCredentialsTests() {
+        loginPage.clickLoginButton();
+    }
+    @Test(dependsOnMethods = "clickLoginButtonWithCorrectedCredentialsTests")
+    public void verifyLandingPageIsDisplayedTests() {
+        landingPage.verifyLandingPageIsDisplayed();
+    }
+    @Test(dependsOnMethods = "verifyLandingPageIsDisplayedTests")
+    public void verifyHeadingHaveUsernameTests() {
+        landingPage.verifyHeadingHaveUsername("Test");
+        takesScreenshots.takesSnapShot(driver, "Landing Page with Username");
+    }
+    @Test(dependsOnMethods = "verifyHeadingHaveUsernameTests")
+    public void clickLogoutButtonTests() {
+        landingPage.clickLogoutButton();
+        takesScreenshots.takesSnapShot(driver, "Logged Out and Back to Home Page");
+    }
+
+    @Test(dependsOnMethods = "clickLogoutButtonTests")
+    public void logInAgainTests() {
+        loginPage.verifyLoginPageIsDisplayed();
+        loginPage.enterEmailAddress("testuser");
+        loginPage.enterPassword("password123");
+        loginPage.clickLoginButton();
+        takesScreenshots.takesSnapShot(driver, "Navigated Back to Login Page");
+    }
+
+//    @AfterTest
+//    public void closeBrowser() {
+//        driver.quit();
+//    }
 }

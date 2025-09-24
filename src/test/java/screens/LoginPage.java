@@ -38,6 +38,7 @@ public class LoginPage {
 
     public void enterEmailAddress(String email) {
         new WebDriverWait(driver, Duration.ofSeconds(15)).until(visibilityOf(loginPageTitle_id));
+        emailField_id.click();
         emailField_id.sendKeys(email);
 
     }
@@ -56,6 +57,10 @@ public class LoginPage {
         new WebDriverWait(driver, Duration.ofSeconds(15)).until(visibilityOf(passwordField_id));
         passwordField_id.clear();
     }
+    public void clearEmailTextField() {
+        new WebDriverWait(driver, Duration.ofSeconds(15)).until(visibilityOf(passwordField_id));
+        emailField_id.clear();
+    }
 
     public void loginFailedAcceptLoginAlert() {
         new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.alertIsPresent());
@@ -63,6 +68,11 @@ public class LoginPage {
     }
 
     public void missingRequiredFieldsAlert() {
+        new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.alertIsPresent());
+        driver.switchTo().alert().accept();
+    }
+
+    public void  InvalidCredentialsAlert(){
         new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.alertIsPresent());
         driver.switchTo().alert().accept();
     }

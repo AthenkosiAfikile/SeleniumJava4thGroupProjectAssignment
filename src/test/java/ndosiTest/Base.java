@@ -1,6 +1,7 @@
 package ndosiTest;
 
 import screens.HomePage;
+import screens.LandingPage;
 import screens.LoginPage;
 import utils.BrowserFactory;
 import org.openqa.selenium.WebDriver;
@@ -13,6 +14,7 @@ public class Base {
     final WebDriver driver = browserFactory.startBrowser("chrome", "https://www.ndosiautomation.co.za/");
     HomePage homePage= PageFactory.initElements(driver,HomePage.class);
     LoginPage loginPage= PageFactory.initElements(driver, LoginPage.class);
+    LandingPage landingPage= PageFactory.initElements(driver, LandingPage.class);
     TakesScreenshots takesScreenshots = new TakesScreenshots();
 
 }
