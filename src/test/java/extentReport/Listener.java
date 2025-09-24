@@ -3,6 +3,7 @@ package extentReport;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
+import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
@@ -11,6 +12,7 @@ public class Listener implements ITestListener{
 
     private static ExtentReports extent;
     private static ExtentTest extentTest;
+    private WebDriver driver;
 
     @Override
     public void onTestStart(ITestResult result){
@@ -40,15 +42,5 @@ public class Listener implements ITestListener{
     public void onStart(ITestContext results){
         extent=ExtentReportManager.extentReportSetup();
     }
-
-
-
-
-
-
-
-
-
-
 
 }

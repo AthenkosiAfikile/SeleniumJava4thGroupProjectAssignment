@@ -14,4 +14,5 @@ public class Base {
     HomePage homePage= PageFactory.initElements(driver,HomePage.class);
     LoginPage loginPage= PageFactory.initElements(driver, LoginPage.class);
     TakesScreenshots takesScreenshots = new TakesScreenshots();
+
 }
