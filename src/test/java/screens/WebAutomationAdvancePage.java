@@ -23,4 +23,7 @@ public class WebAutomationAdvancePage {
         webAutomationAdvanceTab_id.isDisplayed();
         webAutomationAdvanceTab_id.click();
     }
+    public void selectDevice(){
+
+    }
 }
