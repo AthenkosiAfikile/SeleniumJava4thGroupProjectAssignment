@@ -14,17 +14,46 @@ public class WebAutomationAdvancePage {
     @FindBy(id= "tab-btn-web")
     WebElement webAutomationAdvanceTab_id;
 
+    @FindBy(id= "deviceType")
+    WebElement deviceType_id;
+    @FindBy(id= "brand")
+    WebElement brand_id;
+
+
+
     public WebAutomationAdvancePage(WebDriver driver) {
         this.driver = driver;
     }
-    public void verifyWebAutomationAdvancePageIsDisplayed() {
+    public void clickWebAutomationAdvanceTab() {
         new WebDriverWait(driver, Duration.ofSeconds(20)).
                 until(ExpectedConditions.visibilityOf(webAutomationAdvanceTab_id));
-        webAutomationAdvanceTab_id.isDisplayed();
         webAutomationAdvanceTab_id.click();
     }
-    public void selectDevice(){
-        webAutomationAdvanceTab_id.click();
+    public void selectDeviceTypeIfBrandNotClickable(String deviceType) {
 
+        if (isElementClickable(brand_id)) {
+            throw new AssertionError("Test failed: brand_id is clickable.");
+        } else {
+            new WebDriverWait(driver, Duration.ofSeconds(20))
+                    .until(ExpectedConditions.visibilityOf(deviceType_id));
+            deviceType_id.sendKeys(deviceType);
+        }
     }
+
+    private boolean isElementClickable(WebElement element) {
+        try {
+            new WebDriverWait(driver, Duration.ofSeconds(5))
+                    .until(ExpectedConditions.elementToBeClickable(element));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    public void selectBrand(String brand) {
+        new WebDriverWait(driver, Duration.ofSeconds(20)).
+                until(ExpectedConditions.visibilityOf(brand_id));
+        brand_id.sendKeys(brand);
+    }
+
+
 }

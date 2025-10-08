@@ -30,6 +30,7 @@ public class RegistrationPage {
     @FindBy(id = "registration-heading")
     WebElement registrationPageTitle_id;
 
+
     public RegistrationPage(WebDriver driver) {
         this.driver = driver;
     }

@@ -1,5 +1,6 @@
 package ndosiTest;
 
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 
 public class NdosiRegistrationPageTest extends Base {
@@ -37,8 +38,8 @@ public class NdosiRegistrationPageTest extends Base {
     @Test(dependsOnMethods = "BadEmailFormatAlertTest")
     public void PasswordAlertTest(){
         registrationPage.enterEmail("testuser@gmail.com");
-        registrationPage.enterPassword("123");
-        registrationPage.enterConfirmPassword("123");
+        registrationPage.enterPassword("");
+        registrationPage.enterConfirmPassword("112323");
         registrationPage.clickRegisterButton();
         registrationPage.PasswordAlert();
         takesScreenshots.takesSnapShot(driver, "Password Alert");
@@ -57,5 +58,10 @@ public class NdosiRegistrationPageTest extends Base {
         registrationPage.clickRegisterButton();
         registrationPage.SuccessfulRegistrationAlert();
         takesScreenshots.takesSnapShot(driver, "Successful Registration");
+    }
+
+    @AfterTest
+    public void closeBrowser() {
+        driver.quit();
     }
 }
