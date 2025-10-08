@@ -28,8 +28,8 @@ public class NdosiRegistrationPageTest extends Base {
         registrationPage.enterFirstName("Test");
         registrationPage.enterLastName("User");
         registrationPage.enterEmail("testuser.com");
-        registrationPage.enterPassword("Test@1234");
-        registrationPage.enterConfirmPassword("Test@1234");
+        registrationPage.enterPassword("Test@123");
+        registrationPage.enterConfirmPassword("Test@123");
         registrationPage.clickRegisterButton();
         registrationPage.BadEmailFormatAlert();
         takesScreenshots.takesSnapShot(driver, "Bad Email Format Alert");

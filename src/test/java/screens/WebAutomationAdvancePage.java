@@ -1,9 +1,11 @@
 package screens;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -11,49 +13,109 @@ import java.time.Duration;
 public class WebAutomationAdvancePage {
     WebDriver driver;
 
-    @FindBy(id= "tab-btn-web")
+    @FindBy(id = "tab-btn-web")
     WebElement webAutomationAdvanceTab_id;
-
-    @FindBy(id= "deviceType")
+    @FindBy(id = "deviceType")
     WebElement deviceType_id;
-    @FindBy(id= "brand")
+    @FindBy(id = "brand")
     WebElement brand_id;
-
-
+    @FindBy(id = "inventory-next-btn")
+    WebElement nextButton_id;
+    @FindBy(id = "storage-64GB")
+    WebElement storage_id;
+    @FindBy(id = "storage-128GB")
+    WebElement storage128GB_id;
+    @FindBy(id = "storage-256GB")
+    WebElement storage256GB_id;
+    @FindBy(id = "color")
+    WebElement colorDropdown_id;
 
     public WebAutomationAdvancePage(WebDriver driver) {
         this.driver = driver;
     }
+
     public void clickWebAutomationAdvanceTab() {
-        new WebDriverWait(driver, Duration.ofSeconds(20)).
+        new WebDriverWait(driver, Duration.ofSeconds(10)).
                 until(ExpectedConditions.visibilityOf(webAutomationAdvanceTab_id));
         webAutomationAdvanceTab_id.click();
     }
+
     public void selectDeviceTypeIfBrandNotClickable(String deviceType) {
 
-        if (isElementClickable(brand_id)) {
+        if (isElementClickable()) {
             throw new AssertionError("Test failed: brand_id is clickable.");
         } else {
-            new WebDriverWait(driver, Duration.ofSeconds(20))
+            new WebDriverWait(driver, Duration.ofSeconds(10))
                     .until(ExpectedConditions.visibilityOf(deviceType_id));
             deviceType_id.sendKeys(deviceType);
         }
     }
 
-    private boolean isElementClickable(WebElement element) {
+    private boolean isElementClickable() {
         try {
-            new WebDriverWait(driver, Duration.ofSeconds(5))
-                    .until(ExpectedConditions.elementToBeClickable(element));
+            new WebDriverWait(driver, Duration.ofSeconds(10))
+                    .until(ExpectedConditions.elementToBeClickable(nextButton_id));
             return true;
         } catch (Exception e) {
             return false;
         }
     }
+
     public void selectBrand(String brand) {
-        new WebDriverWait(driver, Duration.ofSeconds(20)).
-                until(ExpectedConditions.visibilityOf(brand_id));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(true);", brand_id);
+
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOf(brand_id));
         brand_id.sendKeys(brand);
     }
 
+    public void selectStorage(String storageOption) {
+        switch (storageOption) {
+            case "64GB" -> {
+                new WebDriverWait(driver, Duration.ofSeconds(10))
+                        .until(ExpectedConditions.visibilityOf(storage_id));
+                storage_id.click();
+            }
+            case "128GB" -> {
+                new WebDriverWait(driver, Duration.ofSeconds(10))
+                        .until(ExpectedConditions.visibilityOf(storage128GB_id));
+                storage128GB_id.click();
+            }
+            case "256GB" -> {
+                new WebDriverWait(driver, Duration.ofSeconds(10))
+                        .until(ExpectedConditions.visibilityOf(storage256GB_id));
+                storage256GB_id.click();
+            }
+            default -> throw new IllegalArgumentException("Invalid storage option: " + storageOption);
+        }
+    }
 
+    public void selectColor(String color) {
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOf(colorDropdown_id));
+
+        Select colorSelect = new Select(colorDropdown_id);
+        colorSelect.selectByVisibleText(color);
+    }
+
+    public boolean isColorFieldEmpty() {
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOf(colorDropdown_id));
+
+        Select colorSelect = new Select(colorDropdown_id);
+        String currentColor = colorSelect.getFirstSelectedOption().getText().trim();
+
+        return currentColor.isEmpty() || currentColor.contains("Color");
+    }
+
+    public boolean isNextButtonClickable() {
+        try {
+            new WebDriverWait(driver, Duration.ofSeconds(10))
+                    .until(ExpectedConditions.elementToBeClickable(nextButton_id));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

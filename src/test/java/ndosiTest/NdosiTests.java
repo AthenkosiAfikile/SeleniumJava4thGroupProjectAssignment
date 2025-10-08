@@ -1,6 +1,7 @@
 package ndosiTest;
 
 import extentReport.Listener;
+import org.junit.jupiter.api.Assertions;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -76,20 +77,24 @@ public class NdosiTests extends Base {
         landingPage.verifyLandingPageIsDisplayed();
         takesScreenshots.takesSnapShot(driver, "Landing Page");
     }
+
     @Test(dependsOnMethods = "verifyLandingPageIsDisplayedTests")
     public void verifyHeadingHaveUsernameTests() {
         landingPage.verifyHeadingHaveUsername("Test");
         takesScreenshots.takesSnapShot(driver, "Heading with Username");
     }
+
     @Test(dependsOnMethods = "verifyHeadingHaveUsernameTests")
     public void clickLogoutButtonTests() {
         landingPage.clickLogoutButton();
     }
+
     @Test(dependsOnMethods = "clickLogoutButtonTests")
     public void verifyLoginPageIsDisplayedAfterLogoutTests() {
         loginPage.verifyLoginPageIsDisplayed();
         takesScreenshots.takesSnapShot(driver, "Login Page After Logout");
     }
+
     @Test(dependsOnMethods = "verifyLoginPageIsDisplayedAfterLogoutTests")
     public void loginAgainWithCredentialsTest() {
         enterEmailAddressTests();
@@ -97,19 +102,54 @@ public class NdosiTests extends Base {
         clickLoginButtonTests();
         verifyLandingPageIsDisplayedTests();
     }
+
     @Test(dependsOnMethods = "loginAgainWithCredentialsTest")
     public void clickWebAutomationAdvButtonTests() {
         webAutomationAdvPage.clickWebAutomationAdvanceTab();
         takesScreenshots.takesSnapShot(driver, "Web Automation Adv Page");
     }
+
     @Test(dependsOnMethods = "clickWebAutomationAdvButtonTests")
     public void selectDeviceTypeIfBrandNotClickableTests() {
-        webAutomationAdvPage.selectDeviceTypeIfBrandNotClickable("Laptop");
+        webAutomationAdvPage.selectDeviceTypeIfBrandNotClickable("Phone");
         takesScreenshots.takesSnapShot(driver, "Device Type Selected");
     }
 
-    @AfterTest
-    public void closeBrowser() {
-        driver.quit();
+    @Test(dependsOnMethods = "selectDeviceTypeIfBrandNotClickableTests")
+    public void selectBrandTests() {
+        webAutomationAdvPage.selectBrand("Apple");
+        takesScreenshots.takesSnapShot(driver, "Brand Selected");
     }
+
+    @Test(dependsOnMethods = "selectBrandTests")
+    public void selectStorageTests() {
+        webAutomationAdvPage.selectStorage("128GB");
+        takesScreenshots.takesSnapShot(driver, "Storage Selected");
+    }
+    @Test(dependsOnMethods = "selectStorageTests")
+    public void testColorSelectionDoesNotEnableNextButton() {
+
+        if (webAutomationAdvPage.isColorFieldEmpty()) {
+            Assertions.assertFalse(webAutomationAdvPage.isNextButtonClickable(),
+                    "FAIL: Next button should NOT be clickable when Color is empty.");
+
+            System.out.println("Color is empty. Selecting 'Black'.");
+            webAutomationAdvPage.selectColor("White");
+
+            boolean isNextButtonNowClickable = webAutomationAdvPage.isNextButtonClickable();
+            Assertions.assertFalse(isNextButtonNowClickable,
+                    "FAIL: Next button BECAME clickable after only selecting 'Black'. " +
+                            "Quantity/Address is likely still missing.");
+
+            System.out.println("Test Passed: Next button is correctly NOT clickable after selecting only color.");
+
+        } else {
+            System.out.println("Color field already selected. Skipping test.");
+        }
+    }
+
+//    @AfterTest
+//    public void closeBrowser() {
+//        driver.quit();
+//    }
 }
