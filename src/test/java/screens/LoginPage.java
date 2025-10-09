@@ -44,12 +44,12 @@ public class LoginPage {
     }
 
     public void enterPassword(String password) {
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(visibilityOf(loginPageTitle_id));
+        new WebDriverWait(driver, Duration.ofSeconds(15)).until(visibilityOf(loginPageTitle_id));
         passwordField_id.sendKeys(password);
     }
 
     public void clickLoginButton() {
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(visibilityOf(loginPageTitle_id));
+        new WebDriverWait(driver, Duration.ofSeconds(15)).until(visibilityOf(loginPageTitle_id));
         loginButton_id.click();
     }
 

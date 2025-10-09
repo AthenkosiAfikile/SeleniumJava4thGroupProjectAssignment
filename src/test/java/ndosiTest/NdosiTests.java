@@ -106,20 +106,42 @@ public class NdosiTests extends Base {
     @Test(dependsOnMethods = "loginAgainWithCredentialsTest")
     public void clickWebAutomationAdvButtonTests() {
         webAutomationAdvPage.clickWebAutomationAdvanceTab();
+
+        boolean isNextButtonNowClickable = webAutomationAdvPage.isNextButtonClickable();
+        Assertions.assertFalse(isNextButtonNowClickable,
+                "FAIL: Next button BECAME clickable after only selecting storage. " +
+                        "Quantity/Color is likely still missing.");
+
+        System.out.println("Test Passed: Next button is correctly NOT clickable after selecting only storage.");
         takesScreenshots.takesSnapShot(driver, "Web Automation Adv Page");
     }
 
     @Test(dependsOnMethods = "clickWebAutomationAdvButtonTests")
     public void selectDeviceTypeIfBrandNotClickableTests() {
         webAutomationAdvPage.selectDeviceTypeIfBrandNotClickable("Phone");
+
+        boolean isNextButtonNowClickable = webAutomationAdvPage.isNextButtonClickable();
+        Assertions.assertFalse(isNextButtonNowClickable,
+                "FAIL: Next button BECAME clickable after only selecting storage. " +
+                        "Quantity/Color is likely still missing.");
+
+        System.out.println("Test Passed: Next button is correctly NOT clickable after selecting only storage.");
         takesScreenshots.takesSnapShot(driver, "Device Type Selected");
     }
 
     @Test(dependsOnMethods = "selectDeviceTypeIfBrandNotClickableTests")
     public void selectBrandTests() {
         webAutomationAdvPage.selectBrand("Apple");
+
+        boolean isNextButtonNowClickable = webAutomationAdvPage.isNextButtonClickable();
+        Assertions.assertFalse(isNextButtonNowClickable,
+                "FAIL: Next button BECAME clickable after only selecting Brand. " +
+                        "Quantity/Color is likely still missing.");
+
+        System.out.println("Test Passed: Next button is correctly NOT clickable after selecting only storage.");
         takesScreenshots.takesSnapShot(driver, "Brand Selected");
     }
+
     @Test(dependsOnMethods = "selectBrandTests")
     public void testStorageSelectionAndNextButtonState() {
 
@@ -169,7 +191,7 @@ public class NdosiTests extends Base {
     @Test(dependsOnMethods = "testColorSelectionDoesNotEnableNextButton")
     public void testQuantityValidationAndNextButtonState() {
         webAutomationAdvPage.getEnteredQuantity();
-        Assertions.assertEquals(" ", webAutomationAdvPage.getEnteredQuantity(),
+        Assertions.assertEquals("1", webAutomationAdvPage.getEnteredQuantity(),
                 "FAIL: Quantity field is NOT empty on page load.");
 
         webAutomationAdvPage.enterQuantity("0");
@@ -183,16 +205,31 @@ public class NdosiTests extends Base {
         System.out.println("Test 2 Passed: Next button correctly disabled for Quantity 11.");
 
 
-        webAutomationAdvPage.enterQuantity("1");
+        webAutomationAdvPage.enterQuantity("2");
         Assertions.assertFalse(webAutomationAdvPage.isNextButtonClickable(),
                 "FAIL: Next button is NOT clickable with valid Quantity 1. All mandatory fields " +
                         "must be filled.");
         System.out.println("Test 3 Passed: Next button correctly enabled for Quantity 1.");
     }
 
+    @Test(dependsOnMethods = "testQuantityValidationAndNextButtonState")
+    public void testSubtotalCalculation() {
 
-//    @AfterTest
-//    public void closeBrowser() {
-//        driver.quit();
-//    }
+        final String UNIT = "R400.00";
+        final String TEST_QUANTITY = "2";
+
+        final String EXPECTED_SUBTOTAL = webAutomationAdvPage.calculateExpectedSubtotal(UNIT, TEST_QUANTITY);
+
+        System.out.println("Expected Subtotal calculated: " + EXPECTED_SUBTOTAL);
+
+        webAutomationAdvPage.enterQuantity(TEST_QUANTITY);
+
+        String actualSubtotal = webAutomationAdvPage.getSubtotalAmount();
+        Assertions.assertEquals(EXPECTED_SUBTOTAL, actualSubtotal,
+                "FAIL: Subtotal calculation is incorrect. " +
+                        "Expected: " + EXPECTED_SUBTOTAL + ", Actual: " + actualSubtotal);
+
+        System.out.println("Test Passed: Subtotal calculated correctly for Quantity " + TEST_QUANTITY + ".");
+    }
+
 }

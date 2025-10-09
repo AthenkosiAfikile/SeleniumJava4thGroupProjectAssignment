@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.Locale;
 
 public class WebAutomationAdvancePage {
     WebDriver driver;
@@ -31,12 +32,17 @@ public class WebAutomationAdvancePage {
     WebElement colorDropdown_id;
     @FindBy(id = "quantity")
     WebElement quantity_id;
+    @FindBy(id = "subtotal-value")
+    WebElement subtotalValue_id;
 
     public WebAutomationAdvancePage(WebDriver driver) {
         this.driver = driver;
     }
 
     public void clickWebAutomationAdvanceTab() {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(true);", webAutomationAdvanceTab_id);
+
         new WebDriverWait(driver, Duration.ofSeconds(10)).
                 until(ExpectedConditions.visibilityOf(webAutomationAdvanceTab_id));
         webAutomationAdvanceTab_id.click();
@@ -144,6 +150,25 @@ public class WebAutomationAdvancePage {
                 .until(ExpectedConditions.visibilityOf(quantity_id));
         return quantity_id.getAttribute("value");
     }
+    public String getSubtotalAmount() {
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOf(subtotalValue_id));
+        return subtotalValue_id.getText().trim();
+    }
+
+    public String calculateExpectedSubtotal(String unitPriceString, String quantityString) {
+        String priceWithoutCurrency = unitPriceString.replace("R", "");
+        double unitPrice = Double.parseDouble(priceWithoutCurrency);
+
+        int quantity = Integer.parseInt(quantityString);
+
+        double total = unitPrice * quantity;
+
+        String formattedTotal = String.format(Locale.US ,"%.2f", total);
+
+        return "R" + formattedTotal;
+    }
+
 
     public boolean isNextButtonClickable() {
         try {
