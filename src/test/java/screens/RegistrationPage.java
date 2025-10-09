@@ -36,65 +36,65 @@ public class RegistrationPage {
     }
 
     public void clickSignUpLink() {
-        new WebDriverWait(driver, Duration.ofSeconds(20)).until(visibilityOf(signUpLink_id));
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(visibilityOf(signUpLink_id));
         signUpLink_id.click();
     }
 
     public void verifyRegistrationPageIsDisplayed() {
-        new WebDriverWait(driver, Duration.ofSeconds(20)).until(visibilityOf(registrationPageTitle_id));
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(visibilityOf(registrationPageTitle_id));
         registrationPageTitle_id.isDisplayed();
     }
 
     public void enterFirstName(String firstName) {
-        new WebDriverWait(driver, Duration.ofSeconds(20)).until(visibilityOf(firstNameField_id));
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(visibilityOf(firstNameField_id));
         firstNameField_id.sendKeys(firstName);
     }
 
     public void enterLastName(String lastName) {
-        new WebDriverWait(driver, Duration.ofSeconds(20)).until(visibilityOf(lastNameField_id));
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(visibilityOf(lastNameField_id));
         lastNameField_id.sendKeys(lastName);
     }
 
     public void enterEmail(String email) {
-        new WebDriverWait(driver, Duration.ofSeconds(20)).until(visibilityOf(emailField_id));
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(visibilityOf(emailField_id));
         emailField_id.clear();
         emailField_id.sendKeys(email);
     }
 
     public void BadEmailFormatAlert() {
-        new WebDriverWait(driver, Duration.ofSeconds(30)).until(ExpectedConditions.alertIsPresent());
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.alertIsPresent());
         driver.switchTo().alert().accept();
     }
 
     public void enterPassword(String password) {
-        new WebDriverWait(driver, Duration.ofSeconds(20)).until(visibilityOf(passwordField_id));
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(visibilityOf(passwordField_id));
         passwordField_id.clear();
         passwordField_id.sendKeys(password);
     }
 
     public void enterConfirmPassword(String confirmPassword) {
-        new WebDriverWait(driver, Duration.ofSeconds(20)).until(visibilityOf(confirmPasswordField_id));
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(visibilityOf(confirmPasswordField_id));
         confirmPasswordField_id.clear();
         confirmPasswordField_id.sendKeys(confirmPassword);
     }
 
     public void PasswordAlert() {
-        new WebDriverWait(driver, Duration.ofSeconds(20)).until(ExpectedConditions.alertIsPresent());
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.alertIsPresent());
         driver.switchTo().alert().accept();
     }
 
     public void PasswordMismatchAlert() {
-        new WebDriverWait(driver, Duration.ofSeconds(20)).until(ExpectedConditions.alertIsPresent());
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.alertIsPresent());
         driver.switchTo().alert().accept();
     }
 
     public void clickRegisterButton() {
-        new WebDriverWait(driver, Duration.ofSeconds(20)).until(visibilityOf(registerButton_id));
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(visibilityOf(registerButton_id));
         registerButton_id.click();
     }
 
     public void SuccessfulRegistrationAlert() {
-        new WebDriverWait(driver, Duration.ofSeconds(20)).until(ExpectedConditions.alertIsPresent());
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.alertIsPresent());
         driver.switchTo().alert().accept();
     }
 

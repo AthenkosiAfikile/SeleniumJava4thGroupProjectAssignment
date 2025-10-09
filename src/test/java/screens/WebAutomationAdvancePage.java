@@ -29,6 +29,8 @@ public class WebAutomationAdvancePage {
     WebElement storage256GB_id;
     @FindBy(id = "color")
     WebElement colorDropdown_id;
+    @FindBy(id = "quantity")
+    WebElement quantity_id;
 
     public WebAutomationAdvancePage(WebDriver driver) {
         this.driver = driver;
@@ -70,6 +72,27 @@ public class WebAutomationAdvancePage {
         brand_id.sendKeys(brand);
     }
 
+    public boolean isStorageSelected(String storageOption) {
+        return switch (storageOption) {
+            case "64GB" -> {
+                new WebDriverWait(driver, Duration.ofSeconds(10))
+                        .until(ExpectedConditions.visibilityOf(storage_id));
+                yield storage_id.isSelected();
+            }
+            case "128GB" -> {
+                new WebDriverWait(driver, Duration.ofSeconds(10))
+                        .until(ExpectedConditions.visibilityOf(storage128GB_id));
+                yield storage128GB_id.isSelected();
+            }
+            case "256GB" -> {
+                new WebDriverWait(driver, Duration.ofSeconds(10))
+                        .until(ExpectedConditions.visibilityOf(storage256GB_id));
+                yield storage256GB_id.isSelected();
+            }
+            default -> throw new IllegalArgumentException("Invalid storage option: " + storageOption);
+        };
+    }
+
     public void selectStorage(String storageOption) {
         switch (storageOption) {
             case "64GB" -> {
@@ -107,6 +130,19 @@ public class WebAutomationAdvancePage {
         String currentColor = colorSelect.getFirstSelectedOption().getText().trim();
 
         return currentColor.isEmpty() || currentColor.contains("Color");
+    }
+
+    public void enterQuantity(String quantity) {
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOf(quantity_id));
+        quantity_id.clear();
+        quantity_id.sendKeys(quantity);
+    }
+
+    public String getEnteredQuantity() {
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOf(quantity_id));
+        return quantity_id.getAttribute("value");
     }
 
     public boolean isNextButtonClickable() {

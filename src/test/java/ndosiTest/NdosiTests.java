@@ -120,13 +120,31 @@ public class NdosiTests extends Base {
         webAutomationAdvPage.selectBrand("Apple");
         takesScreenshots.takesSnapShot(driver, "Brand Selected");
     }
-
     @Test(dependsOnMethods = "selectBrandTests")
-    public void selectStorageTests() {
-        webAutomationAdvPage.selectStorage("128GB");
-        takesScreenshots.takesSnapShot(driver, "Storage Selected");
+    public void testStorageSelectionAndNextButtonState() {
+
+        final String TARGET_STORAGE = "64GB";
+
+        if (!webAutomationAdvPage.isStorageSelected(TARGET_STORAGE)) {
+            Assertions.assertFalse(webAutomationAdvPage.isNextButtonClickable(),
+                    "FAIL: Next button should NOT be clickable before selecting storage.");
+
+            System.out.println("Storage " + TARGET_STORAGE + " is not selected. Selecting it now.");
+            webAutomationAdvPage.selectStorage(TARGET_STORAGE);
+            boolean isNextButtonNowClickable = webAutomationAdvPage.isNextButtonClickable();
+
+            Assertions.assertFalse(isNextButtonNowClickable,
+                    "FAIL: Next button BECAME clickable after only selecting storage. " +
+                            "Quantity/Color is likely still missing.");
+
+            System.out.println("Test Passed: Next button is correctly NOT clickable after selecting only storage.");
+
+        } else {
+            System.out.println("Storage " + TARGET_STORAGE + " already selected. Skipping test.");
+        }
     }
-    @Test(dependsOnMethods = "selectStorageTests")
+
+    @Test(dependsOnMethods = "testStorageSelectionAndNextButtonState")
     public void testColorSelectionDoesNotEnableNextButton() {
 
         if (webAutomationAdvPage.isColorFieldEmpty()) {
@@ -147,6 +165,31 @@ public class NdosiTests extends Base {
             System.out.println("Color field already selected. Skipping test.");
         }
     }
+
+    @Test(dependsOnMethods = "testColorSelectionDoesNotEnableNextButton")
+    public void testQuantityValidationAndNextButtonState() {
+        webAutomationAdvPage.getEnteredQuantity();
+        Assertions.assertEquals(" ", webAutomationAdvPage.getEnteredQuantity(),
+                "FAIL: Quantity field is NOT empty on page load.");
+
+        webAutomationAdvPage.enterQuantity("0");
+        Assertions.assertFalse(webAutomationAdvPage.isNextButtonClickable(),
+                "FAIL: Next button is clickable with Quantity 0 (should be disabled).");
+        System.out.println("Test 1 Passed: Next button correctly disabled for Quantity 0.");
+
+        webAutomationAdvPage.enterQuantity("11");
+        Assertions.assertFalse(webAutomationAdvPage.isNextButtonClickable(),
+                "FAIL: Next button is clickable with Quantity 11 (should be disabled).");
+        System.out.println("Test 2 Passed: Next button correctly disabled for Quantity 11.");
+
+
+        webAutomationAdvPage.enterQuantity("1");
+        Assertions.assertFalse(webAutomationAdvPage.isNextButtonClickable(),
+                "FAIL: Next button is NOT clickable with valid Quantity 1. All mandatory fields " +
+                        "must be filled.");
+        System.out.println("Test 3 Passed: Next button correctly enabled for Quantity 1.");
+    }
+
 
 //    @AfterTest
 //    public void closeBrowser() {

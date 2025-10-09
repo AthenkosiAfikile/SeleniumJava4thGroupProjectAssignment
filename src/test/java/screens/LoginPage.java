@@ -32,48 +32,48 @@ public class LoginPage {
     }
 
     public void verifyLoginPageIsDisplayed() {
-        new WebDriverWait(driver, Duration.ofSeconds(15)).until(visibilityOf(loginPageTitle_id));
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(visibilityOf(loginPageTitle_id));
         loginPageTitle_id.isDisplayed();
     }
 
     public void enterEmailAddress(String email) {
-        new WebDriverWait(driver, Duration.ofSeconds(15)).until(visibilityOf(loginPageTitle_id));
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(visibilityOf(loginPageTitle_id));
         emailField_id.click();
         emailField_id.sendKeys(email);
 
     }
 
     public void enterPassword(String password) {
-        new WebDriverWait(driver, Duration.ofSeconds(15)).until(visibilityOf(loginPageTitle_id));
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(visibilityOf(loginPageTitle_id));
         passwordField_id.sendKeys(password);
     }
 
     public void clickLoginButton() {
-        new WebDriverWait(driver, Duration.ofSeconds(15)).until(visibilityOf(loginPageTitle_id));
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(visibilityOf(loginPageTitle_id));
         loginButton_id.click();
     }
 
     public void clearPassword() {
-        new WebDriverWait(driver, Duration.ofSeconds(15)).until(visibilityOf(passwordField_id));
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(visibilityOf(passwordField_id));
         passwordField_id.clear();
     }
     public void clearEmailTextField() {
-        new WebDriverWait(driver, Duration.ofSeconds(15)).until(visibilityOf(passwordField_id));
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(visibilityOf(passwordField_id));
         emailField_id.clear();
     }
 
     public void loginFailedAcceptLoginAlert() {
-        new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.alertIsPresent());
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.alertIsPresent());
         driver.switchTo().alert().accept();
     }
 
     public void missingRequiredFieldsAlert() {
-        new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.alertIsPresent());
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.alertIsPresent());
         driver.switchTo().alert().accept();
     }
 
     public void  InvalidCredentialsAlert(){
-        new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.alertIsPresent());
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.alertIsPresent());
         driver.switchTo().alert().accept();
     }
 
