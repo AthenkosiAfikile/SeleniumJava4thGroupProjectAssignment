@@ -37,7 +37,7 @@ public class LoginPage {
     }
 
     public void enterEmailAddress(String email) {
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(visibilityOf(loginPageTitle_id));
+        new WebDriverWait(driver, Duration.ofSeconds(15)).until(visibilityOf(loginPageTitle_id));
         emailField_id.click();
         emailField_id.sendKeys(email);
 

@@ -27,7 +27,7 @@ public class NdosiRegistrationPageTest extends Base {
         registrationPage.clickSignUpLink();
         registrationPage.enterFirstName("Test");
         registrationPage.enterLastName("User");
-        registrationPage.enterEmail("testuser.com");
+        registrationPage.enterEmail("user@gmail"); // Bad email format
         registrationPage.enterPassword("Test@123");
         registrationPage.enterConfirmPassword("Test@123");
         registrationPage.clickRegisterButton();
@@ -37,7 +37,7 @@ public class NdosiRegistrationPageTest extends Base {
     }
     @Test(dependsOnMethods = "BadEmailFormatAlertTest")
     public void PasswordAlertTest(){
-        registrationPage.enterEmail("testuser@gmail.com");
+        registrationPage.enterEmail("user@gmail.com");
         registrationPage.enterPassword("");
         registrationPage.enterConfirmPassword("112323");
         registrationPage.clickRegisterButton();

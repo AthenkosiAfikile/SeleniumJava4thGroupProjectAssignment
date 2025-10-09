@@ -41,7 +41,7 @@ public class NdosiTests extends Base {
 
     @Test(dependsOnMethods = "missingRequiredFieldsAlert")
     public void enterEmailAddressTests() {
-        loginPage.enterEmailAddress("testuser@gmail.com");
+        loginPage.enterEmailAddress("user@gmail.com");
     }
 
     @Test(dependsOnMethods = "enterEmailAddressTests")
@@ -205,18 +205,18 @@ public class NdosiTests extends Base {
         System.out.println("Test 2 Passed: Next button correctly disabled for Quantity 11.");
 
 
-        webAutomationAdvPage.enterQuantity("2");
+        webAutomationAdvPage.enterQuantity("3");
         Assertions.assertFalse(webAutomationAdvPage.isNextButtonClickable(),
                 "FAIL: Next button is NOT clickable with valid Quantity 1. All mandatory fields " +
                         "must be filled.");
-        System.out.println("Test 3 Passed: Next button correctly enabled for Quantity 1.");
+        System.out.println("Test 3 Passed: Next button correctly enabled for Quantity 3.");
     }
 
     @Test(dependsOnMethods = "testQuantityValidationAndNextButtonState")
     public void testSubtotalCalculation() {
 
         final String UNIT = "R400.00";
-        final String TEST_QUANTITY = "2";
+        final String TEST_QUANTITY = "3";
 
         final String EXPECTED_SUBTOTAL = webAutomationAdvPage.calculateExpectedSubtotal(UNIT, TEST_QUANTITY);
 
@@ -231,5 +231,30 @@ public class NdosiTests extends Base {
 
         System.out.println("Test Passed: Subtotal calculated correctly for Quantity " + TEST_QUANTITY + ".");
     }
+
+    @Test(dependsOnMethods = "testSubtotalCalculation")
+    public void enterAddressTests() {
+        webAutomationAdvPage.enterAddress("123 Test St, Test City");
+
+        Assertions.assertTrue(webAutomationAdvPage.isNextButtonClickable(),
+                "FAIL: Next button is NOW clickable. All mandatory fields " +
+                        "are filled.");
+        System.out.println("Test Passed: The test to enter the Address passed.");
+        takesScreenshots.takesSnapShot(driver, "Address Entered");
+    }
+
+    @Test(dependsOnMethods = "enterAddressTests")
+    public void clickNextButtonTests() {
+        webAutomationAdvPage.clickNextButton();
+        System.out.println("Next button clicked to proceed to the next step.");
+        takesScreenshots.takesSnapShot(driver, "After Clicking Next Button");
+    }
+
+//    @AfterTest
+//    public void tearDown() {
+//        if (driver != null) {
+//            driver.quit();
+//        }
+//    }
 
 }

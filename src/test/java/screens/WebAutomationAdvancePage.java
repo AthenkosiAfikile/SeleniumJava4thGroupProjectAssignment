@@ -13,7 +13,6 @@ import java.util.Locale;
 
 public class WebAutomationAdvancePage {
     WebDriver driver;
-
     @FindBy(id = "tab-btn-web")
     WebElement webAutomationAdvanceTab_id;
     @FindBy(id = "deviceType")
@@ -34,6 +33,10 @@ public class WebAutomationAdvancePage {
     WebElement quantity_id;
     @FindBy(id = "subtotal-value")
     WebElement subtotalValue_id;
+    @FindBy(id = "address")
+    WebElement address_id;
+    @FindBy(id = "inventory-next-btn")
+    WebElement inventoryNextButton_id;
 
     public WebAutomationAdvancePage(WebDriver driver) {
         this.driver = driver;
@@ -43,7 +46,7 @@ public class WebAutomationAdvancePage {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView(true);", webAutomationAdvanceTab_id);
 
-        new WebDriverWait(driver, Duration.ofSeconds(10)).
+        new WebDriverWait(driver, Duration.ofSeconds(5)).
                 until(ExpectedConditions.visibilityOf(webAutomationAdvanceTab_id));
         webAutomationAdvanceTab_id.click();
     }
@@ -53,7 +56,7 @@ public class WebAutomationAdvancePage {
         if (isElementClickable()) {
             throw new AssertionError("Test failed: brand_id is clickable.");
         } else {
-            new WebDriverWait(driver, Duration.ofSeconds(10))
+            new WebDriverWait(driver, Duration.ofSeconds(5))
                     .until(ExpectedConditions.visibilityOf(deviceType_id));
             deviceType_id.sendKeys(deviceType);
         }
@@ -61,7 +64,7 @@ public class WebAutomationAdvancePage {
 
     private boolean isElementClickable() {
         try {
-            new WebDriverWait(driver, Duration.ofSeconds(10))
+            new WebDriverWait(driver, Duration.ofSeconds(5))
                     .until(ExpectedConditions.elementToBeClickable(nextButton_id));
             return true;
         } catch (Exception e) {
@@ -73,7 +76,7 @@ public class WebAutomationAdvancePage {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView(true);", brand_id);
 
-        new WebDriverWait(driver, Duration.ofSeconds(10))
+        new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.visibilityOf(brand_id));
         brand_id.sendKeys(brand);
     }
@@ -81,17 +84,17 @@ public class WebAutomationAdvancePage {
     public boolean isStorageSelected(String storageOption) {
         return switch (storageOption) {
             case "64GB" -> {
-                new WebDriverWait(driver, Duration.ofSeconds(10))
+                new WebDriverWait(driver, Duration.ofSeconds(5))
                         .until(ExpectedConditions.visibilityOf(storage_id));
                 yield storage_id.isSelected();
             }
             case "128GB" -> {
-                new WebDriverWait(driver, Duration.ofSeconds(10))
+                new WebDriverWait(driver, Duration.ofSeconds(5))
                         .until(ExpectedConditions.visibilityOf(storage128GB_id));
                 yield storage128GB_id.isSelected();
             }
             case "256GB" -> {
-                new WebDriverWait(driver, Duration.ofSeconds(10))
+                new WebDriverWait(driver, Duration.ofSeconds(5))
                         .until(ExpectedConditions.visibilityOf(storage256GB_id));
                 yield storage256GB_id.isSelected();
             }
@@ -102,17 +105,17 @@ public class WebAutomationAdvancePage {
     public void selectStorage(String storageOption) {
         switch (storageOption) {
             case "64GB" -> {
-                new WebDriverWait(driver, Duration.ofSeconds(10))
+                new WebDriverWait(driver, Duration.ofSeconds(5))
                         .until(ExpectedConditions.visibilityOf(storage_id));
                 storage_id.click();
             }
             case "128GB" -> {
-                new WebDriverWait(driver, Duration.ofSeconds(10))
+                new WebDriverWait(driver, Duration.ofSeconds(5))
                         .until(ExpectedConditions.visibilityOf(storage128GB_id));
                 storage128GB_id.click();
             }
             case "256GB" -> {
-                new WebDriverWait(driver, Duration.ofSeconds(10))
+                new WebDriverWait(driver, Duration.ofSeconds(5))
                         .until(ExpectedConditions.visibilityOf(storage256GB_id));
                 storage256GB_id.click();
             }
@@ -121,7 +124,7 @@ public class WebAutomationAdvancePage {
     }
 
     public void selectColor(String color) {
-        new WebDriverWait(driver, Duration.ofSeconds(10))
+        new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.visibilityOf(colorDropdown_id));
 
         Select colorSelect = new Select(colorDropdown_id);
@@ -129,7 +132,7 @@ public class WebAutomationAdvancePage {
     }
 
     public boolean isColorFieldEmpty() {
-        new WebDriverWait(driver, Duration.ofSeconds(10))
+        new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.visibilityOf(colorDropdown_id));
 
         Select colorSelect = new Select(colorDropdown_id);
@@ -139,19 +142,20 @@ public class WebAutomationAdvancePage {
     }
 
     public void enterQuantity(String quantity) {
-        new WebDriverWait(driver, Duration.ofSeconds(10))
+        new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.visibilityOf(quantity_id));
         quantity_id.clear();
         quantity_id.sendKeys(quantity);
     }
 
     public String getEnteredQuantity() {
-        new WebDriverWait(driver, Duration.ofSeconds(10))
+        new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.visibilityOf(quantity_id));
         return quantity_id.getAttribute("value");
     }
+
     public String getSubtotalAmount() {
-        new WebDriverWait(driver, Duration.ofSeconds(10))
+        new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.visibilityOf(subtotalValue_id));
         return subtotalValue_id.getText().trim();
     }
@@ -164,19 +168,34 @@ public class WebAutomationAdvancePage {
 
         double total = unitPrice * quantity;
 
-        String formattedTotal = String.format(Locale.US ,"%.2f", total);
+        String formattedTotal = String.format(Locale.US, "%.2f", total);
 
         return "R" + formattedTotal;
+    }
+
+    public void enterAddress(String address) {
+        new WebDriverWait(driver, Duration.ofSeconds(5))
+                .until(ExpectedConditions.visibilityOf(address_id));
+        address_id.clear();
+        address_id.sendKeys(address);
     }
 
 
     public boolean isNextButtonClickable() {
         try {
-            new WebDriverWait(driver, Duration.ofSeconds(10))
+            new WebDriverWait(driver, Duration.ofSeconds(2))
                     .until(ExpectedConditions.elementToBeClickable(nextButton_id));
             return true;
         } catch (Exception e) {
             return false;
         }
+    }
+    public void clickNextButton() {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(true);", nextButton_id);
+
+        new WebDriverWait(driver, Duration.ofSeconds(5))
+                .until(ExpectedConditions.elementToBeClickable(nextButton_id));
+        nextButton_id.click();
     }
 }
