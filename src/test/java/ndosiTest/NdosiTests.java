@@ -41,7 +41,7 @@ public class NdosiTests extends Base {
 
     @Test(dependsOnMethods = "missingRequiredFieldsAlert")
     public void enterEmailAddressTests() {
-        loginPage.enterEmailAddress("user@gmail.com");
+        loginPage.enterEmailAddress("breakathi@gmail.com");
     }
 
     @Test(dependsOnMethods = "enterEmailAddressTests")
@@ -64,7 +64,7 @@ public class NdosiTests extends Base {
     @Test(dependsOnMethods = "acceptLoginAlertTest")
     public void enterPasswordTests() {
         loginPage.clearPassword();
-        loginPage.enterPassword("Test@1234");
+        loginPage.enterPassword("!Athenkosi2001");
     }
 
     @Test(dependsOnMethods = "enterPasswordTests")
@@ -80,7 +80,7 @@ public class NdosiTests extends Base {
 
     @Test(dependsOnMethods = "verifyLandingPageIsDisplayedTests")
     public void verifyHeadingHaveUsernameTests() {
-        landingPage.verifyHeadingHaveUsername("Test");
+        landingPage.verifyHeadingHaveUsername("Athenkosi");
         takesScreenshots.takesSnapShot(driver, "Heading with Username");
     }
 
@@ -250,11 +250,11 @@ public class NdosiTests extends Base {
         takesScreenshots.takesSnapShot(driver, "After Clicking Next Button");
     }
 
-//    @AfterTest
-//    public void tearDown() {
-//        if (driver != null) {
-//            driver.quit();
-//        }
-//    }
+    @AfterTest
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
 
 }

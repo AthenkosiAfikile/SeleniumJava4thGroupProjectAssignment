@@ -43,8 +43,8 @@ public class WebAutomationAdvancePage {
     }
 
     public void clickWebAutomationAdvanceTab() {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView(true);", webAutomationAdvanceTab_id);
+//        JavascriptExecutor js = (JavascriptExecutor) driver;
+//        js.executeScript("arguments[0].scrollIntoView(true);", webAutomationAdvanceTab_id);
 
         new WebDriverWait(driver, Duration.ofSeconds(5)).
                 until(ExpectedConditions.visibilityOf(webAutomationAdvanceTab_id));
