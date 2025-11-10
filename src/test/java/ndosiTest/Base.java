@@ -15,6 +15,7 @@ public class Base {
     LandingPage landingPage= PageFactory.initElements(driver, LandingPage.class);
     RegistrationPage registrationPage= PageFactory.initElements(driver, RegistrationPage.class);
     WebAutomationAdvancePage webAutomationAdvPage= PageFactory.initElements(driver, WebAutomationAdvancePage.class);
+    ExtrasAndPricing extrasAndPricing= PageFactory.initElements(driver, ExtrasAndPricing.class);
     TakesScreenshots takesScreenshots = new TakesScreenshots();
 
 }

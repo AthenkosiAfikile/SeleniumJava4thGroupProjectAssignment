@@ -145,7 +145,7 @@ public class NdosiTests extends Base {
     @Test(dependsOnMethods = "selectBrandTests")
     public void testStorageSelectionAndNextButtonState() {
 
-        final String TARGET_STORAGE = "64GB";
+        final String TARGET_STORAGE = "128GB";
 
         if (!webAutomationAdvPage.isStorageSelected(TARGET_STORAGE)) {
             Assertions.assertFalse(webAutomationAdvPage.isNextButtonClickable(),
@@ -205,7 +205,7 @@ public class NdosiTests extends Base {
         System.out.println("Test 2 Passed: Next button correctly disabled for Quantity 11.");
 
 
-        webAutomationAdvPage.enterQuantity("3");
+        webAutomationAdvPage.enterQuantity("2");
         Assertions.assertFalse(webAutomationAdvPage.isNextButtonClickable(),
                 "FAIL: Next button is NOT clickable with valid Quantity 1. All mandatory fields " +
                         "must be filled.");
@@ -215,8 +215,8 @@ public class NdosiTests extends Base {
     @Test(dependsOnMethods = "testQuantityValidationAndNextButtonState")
     public void testSubtotalCalculation() {
 
-        final String UNIT = "R400.00";
-        final String TEST_QUANTITY = "3";
+        final String UNIT = "R480.00";
+        final String TEST_QUANTITY = "2";
 
         final String EXPECTED_SUBTOTAL = webAutomationAdvPage.calculateExpectedSubtotal(UNIT, TEST_QUANTITY);
 
@@ -250,11 +250,27 @@ public class NdosiTests extends Base {
         takesScreenshots.takesSnapShot(driver, "After Clicking Next Button");
     }
 
-    @AfterTest
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
+    @Test(dependsOnMethods = "clickNextButtonTests")
+    public void verifyExtrasAndPricingPageIsDisplayedTests() {
+        extrasAndPricing.selectExpressShippingOption();
     }
+
+    @Test(dependsOnMethods = "verifyExtrasAndPricingPageIsDisplayedTests")
+    public void selectOneYearWarrantyOptionTests() {
+        extrasAndPricing.selectOneYearWarrantyOption();
+    }
+
+    @Test(dependsOnMethods = "selectOneYearWarrantyOptionTests")
+    public void enterDiscountCodeTests() {
+        extrasAndPricing.enterDiscountCode("SAVE10");
+//        takesScreenshots.takesSnapShot(driver, "Extras and Pricing with Discount Code");
+    }
+
+//    @AfterTest
+//    public void tearDown() {
+//        if (driver != null) {
+//            driver.quit();
+//        }
+//    }
 
 }
