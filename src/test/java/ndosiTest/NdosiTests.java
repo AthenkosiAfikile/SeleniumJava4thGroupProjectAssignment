@@ -172,6 +172,7 @@ public class NdosiTests extends Base {
     @Test(dependsOnMethods = "verifyDiscountAppliedTests")
     public void clickBackToInventoryButtonTests() {
         extrasAndPricing.clickBackToInventoryButton();
+        webAutomationAdvPage.clickNextButton();
     }
 
 
