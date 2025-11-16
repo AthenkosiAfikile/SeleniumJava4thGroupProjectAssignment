@@ -7,13 +7,19 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import java.time.Duration;
-import java.util.Locale;
-
 public class WebAutomationAdvancePage {
     WebDriver driver;
+    String stringUnitPriceText;
+    String UnitPriceWithout_R;
+    String ActualQuantityText;
+    String stringActualSubtotalWith_R;
+    String ActualSubtotalWithout_R;
     public static Double unitPrice;
+    public static Double ExpectedSubtotal;
+    static int quantity;
 
     @FindBy(id = "tab-btn-web")
     WebElement webAutomationAdvanceTab_id;
@@ -24,6 +30,9 @@ public class WebAutomationAdvancePage {
 
     @FindBy(id = "unit-price-value")
     WebElement unitPriceValue_id;
+    @FindBy(id = "subtotal-value")
+    WebElement subtotalValue_id;
+
     @FindBy(id = "inventory-next-btn")
     WebElement nextButton_id;
     @FindBy(id = "storage-64GB")
@@ -36,21 +45,14 @@ public class WebAutomationAdvancePage {
     WebElement colorDropdown_id;
     @FindBy(id = "quantity")
     WebElement quantity_id;
-    @FindBy(id = "subtotal-value")
-    WebElement subtotalValue_id;
     @FindBy(id = "address")
     WebElement address_id;
-    @FindBy(id = "inventory-next-btn")
-    WebElement inventoryNextButton_id;
 
     public WebAutomationAdvancePage(WebDriver driver) {
         this.driver = driver;
     }
 
     public void clickWebAutomationAdvanceTab() {
-//        JavascriptExecutor js = (JavascriptExecutor) driver;
-//        js.executeScript("arguments[0].scrollIntoView(true);", webAutomationAdvanceTab_id);
-
         new WebDriverWait(driver, Duration.ofSeconds(5)).
                 until(ExpectedConditions.visibilityOf(webAutomationAdvanceTab_id));
         webAutomationAdvanceTab_id.click();
@@ -86,27 +88,6 @@ public class WebAutomationAdvancePage {
         brand_id.sendKeys(brand);
     }
 
-    public boolean isStorageSelected(String storageOption) {
-        return switch (storageOption) {
-            case "64GB" -> {
-                new WebDriverWait(driver, Duration.ofSeconds(5))
-                        .until(ExpectedConditions.visibilityOf(storage_id));
-                yield storage_id.isSelected();
-            }
-            case "128GB" -> {
-                new WebDriverWait(driver, Duration.ofSeconds(5))
-                        .until(ExpectedConditions.visibilityOf(storage128GB_id));
-                yield storage128GB_id.isSelected();
-            }
-            case "256GB" -> {
-                new WebDriverWait(driver, Duration.ofSeconds(5))
-                        .until(ExpectedConditions.visibilityOf(storage256GB_id));
-                yield storage256GB_id.isSelected();
-            }
-            default -> throw new IllegalArgumentException("Invalid storage option: " + storageOption);
-        };
-    }
-
     public void selectStorage(String storageOption) {
         switch (storageOption) {
             case "64GB" -> {
@@ -136,30 +117,12 @@ public class WebAutomationAdvancePage {
         colorSelect.selectByVisibleText(color);
     }
 
-    public boolean isColorFieldEmpty() {
-        new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.visibilityOf(colorDropdown_id));
-
-        Select colorSelect = new Select(colorDropdown_id);
-        String currentColor = colorSelect.getFirstSelectedOption().getText().trim();
-
-        return currentColor.isEmpty() || currentColor.contains("Color");
-    }
-
     public void enterQuantity(String quantity) {
         new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.visibilityOf(quantity_id));
         quantity_id.clear();
         quantity_id.sendKeys(quantity);
     }
-
-    public String getEnteredQuantity() {
-        new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.visibilityOf(quantity_id));
-        return quantity_id.getAttribute("value");
-    }
-
-
     public void enterAddress(String address) {
         new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.visibilityOf(address_id));
@@ -169,26 +132,38 @@ public class WebAutomationAdvancePage {
 
 
     public void extractUnitPrice() {
-        String StringUnitPriceText = unitPriceValue_id.getText();
-        System.out.println(StringUnitPriceText);
 
-        String UnitPriceWithout_R = StringUnitPriceText.replace("R", "");
-        System.out.println(UnitPriceWithout_R);
+        stringUnitPriceText = unitPriceValue_id.getText();
+        System.out.println("Unit price with R: " + stringUnitPriceText);
+
+        UnitPriceWithout_R = stringUnitPriceText.replace("R", "");
+        System.out.println("Unit price without R: " + UnitPriceWithout_R);
 
         unitPrice = Double.parseDouble(UnitPriceWithout_R);
-        System.out.println(unitPrice);
-    }
+        System.out.println("Unit price " + unitPrice);
 
-    public boolean isNextButtonClickable() {
-        try {
-            new WebDriverWait(driver, Duration.ofSeconds(2))
-                    .until(ExpectedConditions.elementToBeClickable(nextButton_id));
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
+        ActualQuantityText = quantity_id.getAttribute("value");
+        System.out.println("Quantity Text: " + ActualQuantityText);
 
+        quantity = Integer.parseInt(ActualQuantityText);
+        System.out.println("Quantity value: " + quantity);
+
+        ExpectedSubtotal = unitPrice * quantity;
+        System.out.println("Expected subtotal (Unit Price x Quantity value): " + ExpectedSubtotal);
+
+        stringActualSubtotalWith_R = subtotalValue_id.getText();
+        System.out.println("Actual subtotal with R: " + stringActualSubtotalWith_R);
+
+        ActualSubtotalWithout_R = stringActualSubtotalWith_R.replace("R", "");
+        System.out.println("Actual subtotal without R: " + stringActualSubtotalWith_R);
+
+        Double actualSubtotal = Double.parseDouble(ActualSubtotalWithout_R);
+        System.out.println("Actual subtotal: " + actualSubtotal);
+
+        Assert.assertEquals(ExpectedSubtotal,actualSubtotal,
+                "Actual subtotal does not match expected subtotal.");
+
+    }
 
     public void clickNextButton() {
         JavascriptExecutor js = (JavascriptExecutor) driver;

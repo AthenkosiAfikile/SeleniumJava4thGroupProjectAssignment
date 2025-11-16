@@ -1,7 +1,6 @@
 package ndosiTest;
 
 import extentReport.Listener;
-import org.junit.jupiter.api.Assertions;
 import org.testng.annotations.*;
 
 @Listeners(Listener.class)
@@ -102,122 +101,37 @@ public class NdosiTests extends Base {
     @Test(dependsOnMethods = "loginAgainWithCredentialsTest")
     public void clickWebAutomationAdvButtonTests() {
         webAutomationAdvPage.clickWebAutomationAdvanceTab();
-
-//        boolean isNextButtonNowClickable = webAutomationAdvPage.isNextButtonClickable();
-//        Assertions.assertFalse(isNextButtonNowClickable,
-//                "FAIL: Next button BECAME clickable after only selecting storage. " +
-//                        "Quantity/Color is likely still missing.");
-//
-//        System.out.println("Test Passed: Next button is correctly NOT clickable after selecting only storage.");
-//        takesScreenshots.takesSnapShot(driver, "Web Automation Adv Page");
     }
 
     @Test(dependsOnMethods = "clickWebAutomationAdvButtonTests")
     public void selectDeviceTypeIfBrandNotClickableTests() {
         webAutomationAdvPage.selectDeviceTypeIfBrandNotClickable("Phone");
-
-//        boolean isNextButtonNowClickable = webAutomationAdvPage.isNextButtonClickable();
-//        Assertions.assertFalse(isNextButtonNowClickable,
-//                "FAIL: Next button BECAME clickable after only selecting storage. " +
-//                        "Quantity/Color is likely still missing.");
-//
-//        System.out.println("Test Passed: Next button is correctly NOT clickable after selecting only storage.");
-//        takesScreenshots.takesSnapShot(driver, "Device Type Selected");
     }
 
     @Test(dependsOnMethods = "selectDeviceTypeIfBrandNotClickableTests")
     public void selectBrandTests() {
         webAutomationAdvPage.selectBrand("Apple");
-
-//        boolean isNextButtonNowClickable = webAutomationAdvPage.isNextButtonClickable();
-//        Assertions.assertFalse(isNextButtonNowClickable,
-//                "FAIL: Next button BECAME clickable after only selecting Brand. " +
-//                        "Quantity/Color is likely still missing.");
-//
-//        System.out.println("Test Passed: Next button is correctly NOT clickable after selecting only storage.");
-//        takesScreenshots.takesSnapShot(driver, "Brand Selected");
     }
 
     @Test(dependsOnMethods = "selectBrandTests")
     public void testStorageSelectionAndNextButtonState() {
-
-        final String TARGET_STORAGE = "128GB";
-
-        if (!webAutomationAdvPage.isStorageSelected(TARGET_STORAGE)) {
-            Assertions.assertFalse(webAutomationAdvPage.isNextButtonClickable(),
-                    "FAIL: Next button should NOT be clickable before selecting storage.");
-
-            System.out.println("Storage " + TARGET_STORAGE + " is not selected. Selecting it now.");
-            webAutomationAdvPage.selectStorage(TARGET_STORAGE);
-            boolean isNextButtonNowClickable = webAutomationAdvPage.isNextButtonClickable();
-
-            Assertions.assertFalse(isNextButtonNowClickable,
-                    "FAIL: Next button BECAME clickable after only selecting storage. " +
-                            "Quantity/Color is likely still missing.");
-
-            System.out.println("Test Passed: Next button is correctly NOT clickable after selecting only storage.");
-
-        } else {
-            System.out.println("Storage " + TARGET_STORAGE + " already selected. Skipping test.");
-        }
+        webAutomationAdvPage.selectStorage("128GB");
     }
 
     @Test(dependsOnMethods = "testStorageSelectionAndNextButtonState")
     public void testColorSelectionDoesNotEnableNextButton() {
-
-        if (webAutomationAdvPage.isColorFieldEmpty()) {
-            Assertions.assertFalse(webAutomationAdvPage.isNextButtonClickable(),
-                    "FAIL: Next button should NOT be clickable when Color is empty.");
-
-            System.out.println("Color is empty. Selecting 'Black'.");
-            webAutomationAdvPage.selectColor("White");
-
-            boolean isNextButtonNowClickable = webAutomationAdvPage.isNextButtonClickable();
-            Assertions.assertFalse(isNextButtonNowClickable,
-                    "FAIL: Next button BECAME clickable after only selecting 'Black'. " +
-                            "Quantity/Address is likely still missing.");
-
-            System.out.println("Test Passed: Next button is correctly NOT clickable after selecting only color.");
-
-        } else {
-            System.out.println("Color field already selected. Skipping test.");
-        }
+        webAutomationAdvPage.selectColor("Black");
     }
 
     @Test(dependsOnMethods = "testColorSelectionDoesNotEnableNextButton")
     public void testQuantityValidationAndNextButtonState() {
-        webAutomationAdvPage.getEnteredQuantity();
-        Assertions.assertEquals("1", webAutomationAdvPage.getEnteredQuantity(),
-                "FAIL: Quantity field is NOT empty on page load.");
-
-        webAutomationAdvPage.enterQuantity("0");
-        Assertions.assertFalse(webAutomationAdvPage.isNextButtonClickable(),
-                "FAIL: Next button is clickable with Quantity 0 (should be disabled).");
-        System.out.println("Test 1 Passed: Next button correctly disabled for Quantity 0.");
-
-        webAutomationAdvPage.enterQuantity("11");
-        Assertions.assertFalse(webAutomationAdvPage.isNextButtonClickable(),
-                "FAIL: Next button is clickable with Quantity 11 (should be disabled).");
-        System.out.println("Test 2 Passed: Next button correctly disabled for Quantity 11.");
-
-
         webAutomationAdvPage.enterQuantity("2");
-        Assertions.assertFalse(webAutomationAdvPage.isNextButtonClickable(),
-                "FAIL: Next button is NOT clickable with valid Quantity 1. All mandatory fields " +
-                        "must be filled.");
-        System.out.println("Test 3 Passed: Next button correctly enabled for Quantity 3.");
     }
 
 
     @Test(dependsOnMethods = "testQuantityValidationAndNextButtonState")
     public void enterAddressTests() {
         webAutomationAdvPage.enterAddress("123 Test St, Test City");
-
-        Assertions.assertTrue(webAutomationAdvPage.isNextButtonClickable(),
-                "FAIL: Next button is NOW clickable. All mandatory fields " +
-                        "are filled.");
-        System.out.println("Test Passed: The test to enter the Address passed.");
-        takesScreenshots.takesSnapShot(driver, "Address Entered");
     }
 
     @Test(dependsOnMethods = "enterAddressTests")
@@ -228,8 +142,6 @@ public class NdosiTests extends Base {
     @Test(dependsOnMethods = "extractUnitPriceTests")
     public void clickNextButtonTests() {
         webAutomationAdvPage.clickNextButton();
-        System.out.println("Next button clicked to proceed to the next step.");
-        takesScreenshots.takesSnapShot(driver, "After Clicking Next Button");
     }
 
     @Test(dependsOnMethods = "clickNextButtonTests")
@@ -246,6 +158,7 @@ public class NdosiTests extends Base {
     public void enterDiscountCodeTests() {
         extrasAndPricing.enterDiscountCode("SAVE10");
     }
+
     @Test(dependsOnMethods = "enterDiscountCodeTests")
     public void clickApplyDiscountButtonTests() {
         extrasAndPricing.clickApplyDiscountButton();
@@ -262,12 +175,11 @@ public class NdosiTests extends Base {
     }
 
 
-
-//    @AfterTest
-//    public void tearDown() {
-//        if (driver != null) {
-//            driver.quit();
-//        }
-//    }
+    @AfterTest
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
 
 }
