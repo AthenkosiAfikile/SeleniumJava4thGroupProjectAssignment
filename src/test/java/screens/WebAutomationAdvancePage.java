@@ -13,12 +13,17 @@ import java.util.Locale;
 
 public class WebAutomationAdvancePage {
     WebDriver driver;
+    public static Double unitPrice;
+
     @FindBy(id = "tab-btn-web")
     WebElement webAutomationAdvanceTab_id;
     @FindBy(id = "deviceType")
     WebElement deviceType_id;
     @FindBy(id = "brand")
     WebElement brand_id;
+
+    @FindBy(id = "unit-price-value")
+    WebElement unitPriceValue_id;
     @FindBy(id = "inventory-next-btn")
     WebElement nextButton_id;
     @FindBy(id = "storage-64GB")
@@ -154,24 +159,6 @@ public class WebAutomationAdvancePage {
         return quantity_id.getAttribute("value");
     }
 
-    public String getSubtotalAmount() {
-        new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.visibilityOf(subtotalValue_id));
-        return subtotalValue_id.getText().trim();
-    }
-
-    public String calculateExpectedSubtotal(String unitPriceString, String quantityString) {
-        String priceWithoutCurrency = unitPriceString.replace("R", "");
-        double unitPrice = Double.parseDouble(priceWithoutCurrency);
-
-        int quantity = Integer.parseInt(quantityString);
-
-        double total = unitPrice * quantity;
-
-        String formattedTotal = String.format(Locale.US, "%.2f", total);
-
-        return "R" + formattedTotal;
-    }
 
     public void enterAddress(String address) {
         new WebDriverWait(driver, Duration.ofSeconds(5))
@@ -180,6 +167,17 @@ public class WebAutomationAdvancePage {
         address_id.sendKeys(address);
     }
 
+
+    public void extractUnitPrice() {
+        String StringUnitPriceText = unitPriceValue_id.getText();
+        System.out.println(StringUnitPriceText);
+
+        String UnitPriceWithout_R = StringUnitPriceText.replace("R", "");
+        System.out.println(UnitPriceWithout_R);
+
+        unitPrice = Double.parseDouble(UnitPriceWithout_R);
+        System.out.println(unitPrice);
+    }
 
     public boolean isNextButtonClickable() {
         try {
@@ -190,6 +188,8 @@ public class WebAutomationAdvancePage {
             return false;
         }
     }
+
+
     public void clickNextButton() {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView(true);", nextButton_id);

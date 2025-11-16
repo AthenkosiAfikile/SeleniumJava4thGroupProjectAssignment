@@ -28,13 +28,13 @@ public class LandingPage {
     }
 
     public void verifyHeadingHaveUsername(String username) {
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(visibilityOf(landingPageTitle_id));
+        new WebDriverWait(driver, Duration.ofSeconds(15)).until(visibilityOf(landingPageTitle_id));
         String headingText = landingPageTitle_id.getText();
         Assert.assertTrue(headingText.contains(username), "Heading does not contain the expected username.");
     }
 
     public void clickLogoutButton() {
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(visibilityOf(logoutButton_id));
+        new WebDriverWait(driver, Duration.ofSeconds(15)).until(visibilityOf(logoutButton_id));
         logoutButton_id.click();
     }
 

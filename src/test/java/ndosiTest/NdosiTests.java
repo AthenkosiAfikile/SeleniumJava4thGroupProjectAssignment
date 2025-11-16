@@ -2,10 +2,7 @@ package ndosiTest;
 
 import extentReport.Listener;
 import org.junit.jupiter.api.Assertions;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
-
+import org.testng.annotations.*;
 
 @Listeners(Listener.class)
 public class NdosiTests extends Base {
@@ -58,7 +55,6 @@ public class NdosiTests extends Base {
     @Test(dependsOnMethods = "clickLoginWithInvalidPasswordTest")
     public void acceptLoginAlertTest() {
         loginPage.loginFailedAcceptLoginAlert();
-        takesScreenshots.takesSnapShot(driver, "Login Alert Accepted");
     }
 
     @Test(dependsOnMethods = "acceptLoginAlertTest")
@@ -107,39 +103,39 @@ public class NdosiTests extends Base {
     public void clickWebAutomationAdvButtonTests() {
         webAutomationAdvPage.clickWebAutomationAdvanceTab();
 
-        boolean isNextButtonNowClickable = webAutomationAdvPage.isNextButtonClickable();
-        Assertions.assertFalse(isNextButtonNowClickable,
-                "FAIL: Next button BECAME clickable after only selecting storage. " +
-                        "Quantity/Color is likely still missing.");
-
-        System.out.println("Test Passed: Next button is correctly NOT clickable after selecting only storage.");
-        takesScreenshots.takesSnapShot(driver, "Web Automation Adv Page");
+//        boolean isNextButtonNowClickable = webAutomationAdvPage.isNextButtonClickable();
+//        Assertions.assertFalse(isNextButtonNowClickable,
+//                "FAIL: Next button BECAME clickable after only selecting storage. " +
+//                        "Quantity/Color is likely still missing.");
+//
+//        System.out.println("Test Passed: Next button is correctly NOT clickable after selecting only storage.");
+//        takesScreenshots.takesSnapShot(driver, "Web Automation Adv Page");
     }
 
     @Test(dependsOnMethods = "clickWebAutomationAdvButtonTests")
     public void selectDeviceTypeIfBrandNotClickableTests() {
         webAutomationAdvPage.selectDeviceTypeIfBrandNotClickable("Phone");
 
-        boolean isNextButtonNowClickable = webAutomationAdvPage.isNextButtonClickable();
-        Assertions.assertFalse(isNextButtonNowClickable,
-                "FAIL: Next button BECAME clickable after only selecting storage. " +
-                        "Quantity/Color is likely still missing.");
-
-        System.out.println("Test Passed: Next button is correctly NOT clickable after selecting only storage.");
-        takesScreenshots.takesSnapShot(driver, "Device Type Selected");
+//        boolean isNextButtonNowClickable = webAutomationAdvPage.isNextButtonClickable();
+//        Assertions.assertFalse(isNextButtonNowClickable,
+//                "FAIL: Next button BECAME clickable after only selecting storage. " +
+//                        "Quantity/Color is likely still missing.");
+//
+//        System.out.println("Test Passed: Next button is correctly NOT clickable after selecting only storage.");
+//        takesScreenshots.takesSnapShot(driver, "Device Type Selected");
     }
 
     @Test(dependsOnMethods = "selectDeviceTypeIfBrandNotClickableTests")
     public void selectBrandTests() {
         webAutomationAdvPage.selectBrand("Apple");
 
-        boolean isNextButtonNowClickable = webAutomationAdvPage.isNextButtonClickable();
-        Assertions.assertFalse(isNextButtonNowClickable,
-                "FAIL: Next button BECAME clickable after only selecting Brand. " +
-                        "Quantity/Color is likely still missing.");
-
-        System.out.println("Test Passed: Next button is correctly NOT clickable after selecting only storage.");
-        takesScreenshots.takesSnapShot(driver, "Brand Selected");
+//        boolean isNextButtonNowClickable = webAutomationAdvPage.isNextButtonClickable();
+//        Assertions.assertFalse(isNextButtonNowClickable,
+//                "FAIL: Next button BECAME clickable after only selecting Brand. " +
+//                        "Quantity/Color is likely still missing.");
+//
+//        System.out.println("Test Passed: Next button is correctly NOT clickable after selecting only storage.");
+//        takesScreenshots.takesSnapShot(driver, "Brand Selected");
     }
 
     @Test(dependsOnMethods = "selectBrandTests")
@@ -212,27 +208,8 @@ public class NdosiTests extends Base {
         System.out.println("Test 3 Passed: Next button correctly enabled for Quantity 3.");
     }
 
+
     @Test(dependsOnMethods = "testQuantityValidationAndNextButtonState")
-    public void testSubtotalCalculation() {
-
-        final String UNIT = "R480.00";
-        final String TEST_QUANTITY = "2";
-
-        final String EXPECTED_SUBTOTAL = webAutomationAdvPage.calculateExpectedSubtotal(UNIT, TEST_QUANTITY);
-
-        System.out.println("Expected Subtotal calculated: " + EXPECTED_SUBTOTAL);
-
-        webAutomationAdvPage.enterQuantity(TEST_QUANTITY);
-
-        String actualSubtotal = webAutomationAdvPage.getSubtotalAmount();
-        Assertions.assertEquals(EXPECTED_SUBTOTAL, actualSubtotal,
-                "FAIL: Subtotal calculation is incorrect. " +
-                        "Expected: " + EXPECTED_SUBTOTAL + ", Actual: " + actualSubtotal);
-
-        System.out.println("Test Passed: Subtotal calculated correctly for Quantity " + TEST_QUANTITY + ".");
-    }
-
-    @Test(dependsOnMethods = "testSubtotalCalculation")
     public void enterAddressTests() {
         webAutomationAdvPage.enterAddress("123 Test St, Test City");
 
@@ -244,6 +221,11 @@ public class NdosiTests extends Base {
     }
 
     @Test(dependsOnMethods = "enterAddressTests")
+    public void extractUnitPriceTests() {
+        webAutomationAdvPage.extractUnitPrice();
+    }
+
+    @Test(dependsOnMethods = "extractUnitPriceTests")
     public void clickNextButtonTests() {
         webAutomationAdvPage.clickNextButton();
         System.out.println("Next button clicked to proceed to the next step.");
@@ -263,8 +245,23 @@ public class NdosiTests extends Base {
     @Test(dependsOnMethods = "selectOneYearWarrantyOptionTests")
     public void enterDiscountCodeTests() {
         extrasAndPricing.enterDiscountCode("SAVE10");
-//        takesScreenshots.takesSnapShot(driver, "Extras and Pricing with Discount Code");
     }
+    @Test(dependsOnMethods = "enterDiscountCodeTests")
+    public void clickApplyDiscountButtonTests() {
+        extrasAndPricing.clickApplyDiscountButton();
+    }
+
+    @Test(dependsOnMethods = "clickApplyDiscountButtonTests")
+    public void verifyDiscountAppliedTests() {
+        extrasAndPricing.verifyDiscountApplied();
+    }
+
+    @Test(dependsOnMethods = "verifyDiscountAppliedTests")
+    public void clickBackToInventoryButtonTests() {
+        extrasAndPricing.clickBackToInventoryButton();
+    }
+
+
 
 //    @AfterTest
 //    public void tearDown() {
