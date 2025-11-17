@@ -35,7 +35,6 @@ public class ExtrasAndPricing {
     WebElement oneYearWarrantyOption_id;
     @FindBy(id = "discount-code")
     WebElement discountCodeField_id;
-
     @FindBy(id = "inventory-back-btn")
     WebElement backToInventoryButton_id;
     @FindBy(id = "apply-discount-btn")
@@ -44,7 +43,6 @@ public class ExtrasAndPricing {
     WebElement breakdownWarrantyValue_id;
     @FindBy(id = "breakdown-shipping-value")
     WebElement breakdownShippingValue_id;
-
     @FindBy(id = "breakdown-total-value")
     WebElement breakdownTotalValue_id;
 
@@ -57,30 +55,26 @@ public class ExtrasAndPricing {
     }
 
     public void selectOneYearWarrantyOption() {
-//        JavascriptExecutor js = (JavascriptExecutor) driver;
-//        js.executeScript("arguments[0].scrollIntoView(true);", oneYearWarrantyOption_id);
-
         new WebDriverWait(driver, Duration.ofSeconds(10)).
                 until(ExpectedConditions.visibilityOf(oneYearWarrantyOption_id));
         oneYearWarrantyOption_id.click();
     }
 
     public void enterDiscountCode(String code) {
-//        JavascriptExecutor js = (JavascriptExecutor) driver;
-//        js.executeScript("arguments[0].scrollIntoView(true);", discountCodeField_id);
         discountCodeField_id.sendKeys(code);
     }
 
     public void clickApplyDiscountButton() {
         applyDiscountButton_id.click();
     }
+
     public void verifyDiscountApplied() {
 
         getStringWarrantyPriceWith_R = breakdownWarrantyValue_id.getText();
-        System.out.println("Warranty price with R: " +getStringWarrantyPriceWith_R);
+        System.out.println("Warranty price with R: " + getStringWarrantyPriceWith_R);
 
         stringWarrantyPriceWithout_R = getStringWarrantyPriceWith_R.replace("R", "");
-        System.out.println("Warranty price without R: " +stringWarrantyPriceWithout_R);
+        System.out.println("Warranty price without R: " + stringWarrantyPriceWithout_R);
 
         warrantyPrice = Double.parseDouble(stringWarrantyPriceWithout_R);
         System.out.println("Warranty price value:" + warrantyPrice);
@@ -101,7 +95,7 @@ public class ExtrasAndPricing {
         System.out.println("Discount: " + discount);
 
         expectedTotalPrice = finalDevicePrice - discount;
-        System.out.println("Expected Total price with a discount: " + expectedTotalPrice);
+        System.out.println("Expected Total price (finalDevicePrice - discount) with a discount: " + expectedTotalPrice);
 
         stringTotalPriceString = breakdownTotalValue_id.getText();
         System.out.println("Total price from breakdown with R: " + stringTotalPriceString);

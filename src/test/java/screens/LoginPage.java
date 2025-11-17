@@ -57,22 +57,13 @@ public class LoginPage {
         new WebDriverWait(driver, Duration.ofSeconds(10)).until(visibilityOf(passwordField_id));
         passwordField_id.clear();
     }
-    public void clearEmailTextField() {
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(visibilityOf(passwordField_id));
-        emailField_id.clear();
-    }
 
     public void loginFailedAcceptLoginAlert() {
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.alertIsPresent());
+        new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.alertIsPresent());
         driver.switchTo().alert().accept();
     }
 
     public void missingRequiredFieldsAlert() {
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.alertIsPresent());
-        driver.switchTo().alert().accept();
-    }
-
-    public void  InvalidCredentialsAlert(){
         new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.alertIsPresent());
         driver.switchTo().alert().accept();
     }

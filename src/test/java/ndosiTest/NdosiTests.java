@@ -128,7 +128,6 @@ public class NdosiTests extends Base {
         webAutomationAdvPage.enterQuantity("2");
     }
 
-
     @Test(dependsOnMethods = "testQuantityValidationAndNextButtonState")
     public void enterAddressTests() {
         webAutomationAdvPage.enterAddress("123 Test St, Test City");
@@ -174,13 +173,20 @@ public class NdosiTests extends Base {
         extrasAndPricing.clickBackToInventoryButton();
         webAutomationAdvPage.clickNextButton();
     }
-
-
-    @AfterTest
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
+    @Test(dependsOnMethods = "clickBackToInventoryButtonTests")
+    public void addToCartTests() {
+        addToCart.clickAddToCartButton();
     }
+    @Test(dependsOnMethods = "addToCartTests")
+    public void verifyItemAddedToCartTests() {
+        addToCart.verifyItemAddedToCart();
+    }
+
+//    @AfterTest
+//    public void tearDown() {
+//        if (driver != null) {
+//            driver.quit();
+//        }
+//    }
 
 }

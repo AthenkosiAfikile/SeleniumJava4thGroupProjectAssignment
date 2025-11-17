@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import java.time.Duration;
+
 public class WebAutomationAdvancePage {
     WebDriver driver;
     String stringUnitPriceText;
@@ -123,13 +124,12 @@ public class WebAutomationAdvancePage {
         quantity_id.clear();
         quantity_id.sendKeys(quantity);
     }
+
     public void enterAddress(String address) {
         new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.visibilityOf(address_id));
-        address_id.clear();
         address_id.sendKeys(address);
     }
-
 
     public void extractUnitPrice() {
 
@@ -154,13 +154,13 @@ public class WebAutomationAdvancePage {
         stringActualSubtotalWith_R = subtotalValue_id.getText();
         System.out.println("Actual subtotal with R: " + stringActualSubtotalWith_R);
 
-        ActualSubtotalWithout_R = stringActualSubtotalWith_R.replace("R", "");
-        System.out.println("Actual subtotal without R: " + stringActualSubtotalWith_R);
+        ActualSubtotalWithout_R = stringActualSubtotalWith_R.replace("R", " ");
+        System.out.println("Actual subtotal without R: " + ActualSubtotalWithout_R);
 
         Double actualSubtotal = Double.parseDouble(ActualSubtotalWithout_R);
         System.out.println("Actual subtotal: " + actualSubtotal);
 
-        Assert.assertEquals(ExpectedSubtotal,actualSubtotal,
+        Assert.assertEquals(ExpectedSubtotal, actualSubtotal,
                 "Actual subtotal does not match expected subtotal.");
 
     }

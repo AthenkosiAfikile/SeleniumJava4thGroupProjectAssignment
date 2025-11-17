@@ -25,6 +25,7 @@ public class NdosiRegistrationPageTest extends Base {
     @Test(dependsOnMethods = "verifyLoginPageIsDisplayedTests")
     public void BadEmailFormatAlertTest(){
         registrationPage.clickSignUpLink();
+        registrationPage.verifyRegistrationPageIsDisplayed();
         registrationPage.enterFirstName("Test");
         registrationPage.enterLastName("User");
         registrationPage.enterEmail("user@gmail"); // Bad email format
