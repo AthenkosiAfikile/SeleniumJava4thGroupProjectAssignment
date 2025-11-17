@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class AddToCart {
+public class AddToCartPage {
     WebDriver driver;
 
     @FindBy(id = "add-to-cart-btn")
@@ -13,7 +13,7 @@ public class AddToCart {
  @FindBy(id = "cart-title")
     WebElement cartTitle_id;
 
-    public AddToCart(WebDriver driver) {
+    public AddToCartPage(WebDriver driver) {
         this.driver = driver;
     }
     public void clickAddToCartButton() {

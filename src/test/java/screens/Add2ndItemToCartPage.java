@@ -10,7 +10,7 @@ import org.testng.Assert;
 
 import java.time.Duration;
 
-public class Add2ndItemToCart {
+public class Add2ndItemToCartPage {
     WebDriver driver;
     public static String stringUnitPriceText;
     public static String UnitPriceWithout_R;
@@ -48,7 +48,7 @@ public class Add2ndItemToCart {
     @FindBy(id = "cart-item-remove-1763419470235.1038")
     WebElement remove2ndItem_id;
 
-    public Add2ndItemToCart(WebDriver driver) {
+    public Add2ndItemToCartPage(WebDriver driver) {
         this.driver = driver;
     }
 

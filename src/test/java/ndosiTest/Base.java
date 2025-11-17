@@ -15,9 +15,10 @@ public class Base {
     LandingPage landingPage= PageFactory.initElements(driver, LandingPage.class);
     RegistrationPage registrationPage= PageFactory.initElements(driver, RegistrationPage.class);
     WebAutomationAdvancePage webAutomationAdvPage= PageFactory.initElements(driver, WebAutomationAdvancePage.class);
-    ExtrasAndPricing extrasAndPricing= PageFactory.initElements(driver, ExtrasAndPricing.class);
-    AddToCart addToCart = PageFactory.initElements(driver, AddToCart.class);
-    Add2ndItemToCart add2ndItem = PageFactory.initElements(driver, Add2ndItemToCart.class);
+    ExtrasAndPricingPage extrasAndPricing= PageFactory.initElements(driver, ExtrasAndPricingPage.class);
+    AddToCartPage addToCart = PageFactory.initElements(driver, AddToCartPage.class);
+    Add2ndItemToCartPage add2ndItem = PageFactory.initElements(driver, Add2ndItemToCartPage.class);
+    ReviewCartPage reviewCartPage = PageFactory.initElements(driver, ReviewCartPage.class);
     TakesScreenshots takesScreenshots = new TakesScreenshots();
 
 }

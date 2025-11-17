@@ -228,16 +228,27 @@ public class NdosiTests extends Base {
     public void clickAddToCartAfterButton() {
         addToCart.clickAddToCartButton();
     }
+
     @Test(dependsOnMethods = "clickAddToCartAfterButton")
     public void verify2ndItemAddedToCartTests() {
         add2ndItem.clickReviewCartButton();
     }
 
-//    @AfterTest
-//    public void tearDown() {
-//        if (driver != null) {
-//            driver.quit();
-//        }
+    @Test(dependsOnMethods = "verify2ndItemAddedToCartTests")
+    public void verifyItemsInReviewCartTests() {
+        reviewCartPage.verifyReviewCartPageIsDisplayed();
+    }
+
+//    @Test(dependsOnMethods = "verifyItemsInReviewCartTests")
+//    public void verifyGrandTotalFromCart() {
+//        reviewCartPage.verifyGrandTotalFromCart();
 //    }
+
+    @AfterTest
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
 
 }

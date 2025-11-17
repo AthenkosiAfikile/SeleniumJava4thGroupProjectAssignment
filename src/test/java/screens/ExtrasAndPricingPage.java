@@ -1,6 +1,5 @@
 package screens;
 
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,7 +12,7 @@ import java.time.Duration;
 import static screens.WebAutomationAdvancePage.*;
 
 
-public class ExtrasAndPricing {
+public class ExtrasAndPricingPage {
     WebDriver driver;
 
     String getStringWarrantyPriceWith_R;
@@ -46,7 +45,7 @@ public class ExtrasAndPricing {
     @FindBy(id = "breakdown-total-value")
     WebElement breakdownTotalValue_id;
 
-    public ExtrasAndPricing(WebDriver driver) {
+    public ExtrasAndPricingPage(WebDriver driver) {
         this.driver = driver;
     }
 
