@@ -17,6 +17,7 @@ public class Base {
     WebAutomationAdvancePage webAutomationAdvPage= PageFactory.initElements(driver, WebAutomationAdvancePage.class);
     ExtrasAndPricing extrasAndPricing= PageFactory.initElements(driver, ExtrasAndPricing.class);
     AddToCart addToCart = PageFactory.initElements(driver, AddToCart.class);
+    Add2ndItemToCart add2ndItem = PageFactory.initElements(driver, Add2ndItemToCart.class);
     TakesScreenshots takesScreenshots = new TakesScreenshots();
 
 }

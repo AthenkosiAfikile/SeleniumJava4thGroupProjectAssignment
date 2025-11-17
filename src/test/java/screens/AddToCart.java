@@ -24,4 +24,5 @@ public class AddToCart {
     public void verifyItemAddedToCart() {
         cartTitle_id.isDisplayed();
     }
+
 }

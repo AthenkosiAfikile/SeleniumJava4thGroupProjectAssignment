@@ -114,21 +114,21 @@ public class NdosiTests extends Base {
     }
 
     @Test(dependsOnMethods = "selectBrandTests")
-    public void testStorageSelectionAndNextButtonState() {
+    public void selectStorageTest() {
         webAutomationAdvPage.selectStorage("128GB");
     }
 
-    @Test(dependsOnMethods = "testStorageSelectionAndNextButtonState")
-    public void testColorSelectionDoesNotEnableNextButton() {
+    @Test(dependsOnMethods = "selectStorageTest")
+    public void selectColorTest() {
         webAutomationAdvPage.selectColor("Black");
     }
 
-    @Test(dependsOnMethods = "testColorSelectionDoesNotEnableNextButton")
-    public void testQuantityValidationAndNextButtonState() {
+    @Test(dependsOnMethods = "selectColorTest")
+    public void enterQuantityTest() {
         webAutomationAdvPage.enterQuantity("2");
     }
 
-    @Test(dependsOnMethods = "testQuantityValidationAndNextButtonState")
+    @Test(dependsOnMethods = "enterQuantityTest")
     public void enterAddressTests() {
         webAutomationAdvPage.enterAddress("123 Test St, Test City");
     }
@@ -173,13 +173,64 @@ public class NdosiTests extends Base {
         extrasAndPricing.clickBackToInventoryButton();
         webAutomationAdvPage.clickNextButton();
     }
+
     @Test(dependsOnMethods = "clickBackToInventoryButtonTests")
-    public void addToCartTests() {
+    public void clickAddToCartButtonTests() {
         addToCart.clickAddToCartButton();
     }
-    @Test(dependsOnMethods = "addToCartTests")
+
+    @Test(dependsOnMethods = "clickAddToCartButtonTests")
     public void verifyItemAddedToCartTests() {
         addToCart.verifyItemAddedToCart();
+    }
+
+    @Test(dependsOnMethods = "verifyItemAddedToCartTests")
+    public void select2ndDeviceTypeTests() {
+        add2ndItem.selectDeviceFor2ndPhone("Tablet");
+    }
+
+    @Test(dependsOnMethods = "select2ndDeviceTypeTests")
+    public void selectBrandFor2ndDeviceTests() {
+        add2ndItem.selectBrandFor2ndPhone("Samsung");
+    }
+
+    @Test(dependsOnMethods = "selectBrandFor2ndDeviceTests")
+    public void selectStorageFor2ndDeviceTest() {
+        add2ndItem.selectStorageFor2ndPhone("256GB");
+    }
+
+    @Test(dependsOnMethods = "selectStorageFor2ndDeviceTest")
+    public void selectColorFor2ndDeviceTest() {
+        add2ndItem.selectColorFor2ndPhone("White");
+    }
+
+    @Test(dependsOnMethods = "selectColorFor2ndDeviceTest")
+    public void enterQuantityFor2ndDeviceTest() {
+        add2ndItem.enterQuantityFor2ndPhone("3");
+    }
+
+    @Test(dependsOnMethods = "enterQuantityFor2ndDeviceTest")
+    public void enterAddressFor2ndDeviceTests() {
+        add2ndItem.enterAddressFor2ndPhone("456 Sample Rd, Sample City");
+    }
+
+    @Test(dependsOnMethods = "enterAddressFor2ndDeviceTests")
+    public void extractFor2ndDeviceTests() {
+        add2ndItem.extractUnitPriceFor2ndPhone();
+    }
+
+    @Test(dependsOnMethods = "extractFor2ndDeviceTests")
+    public void clickNextButtonAfterTests() {
+        webAutomationAdvPage.clickNextButton();
+    }
+
+    @Test(dependsOnMethods = "clickNextButtonAfterTests")
+    public void clickAddToCartAfterButton() {
+        addToCart.clickAddToCartButton();
+    }
+    @Test(dependsOnMethods = "clickAddToCartAfterButton")
+    public void verify2ndItemAddedToCartTests() {
+        add2ndItem.clickReviewCartButton();
     }
 
 //    @AfterTest

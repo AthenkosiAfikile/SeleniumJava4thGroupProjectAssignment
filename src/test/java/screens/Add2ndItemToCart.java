@@ -1,6 +1,5 @@
 package screens;
 
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,7 +10,7 @@ import org.testng.Assert;
 
 import java.time.Duration;
 
-public class WebAutomationAdvancePage {
+public class Add2ndItemToCart {
     WebDriver driver;
     public static String stringUnitPriceText;
     public static String UnitPriceWithout_R;
@@ -20,7 +19,7 @@ public class WebAutomationAdvancePage {
     public static String ActualSubtotalWithout_R;
     public static Double unitPrice;
     public static Double ExpectedSubtotal;
-    public static int quantity;
+    static int quantity;
 
     @FindBy(id = "tab-btn-web")
     WebElement webAutomationAdvanceTab_id;
@@ -28,14 +27,10 @@ public class WebAutomationAdvancePage {
     WebElement deviceType_id;
     @FindBy(id = "brand")
     WebElement brand_id;
-
     @FindBy(id = "unit-price-value")
     WebElement unitPriceValue_id;
     @FindBy(id = "subtotal-value")
     WebElement subtotalValue_id;
-
-    @FindBy(id = "inventory-next-btn")
-    WebElement nextButton_id;
     @FindBy(id = "storage-64GB")
     WebElement storage_id;
     @FindBy(id = "storage-128GB")
@@ -48,48 +43,29 @@ public class WebAutomationAdvancePage {
     WebElement quantity_id;
     @FindBy(id = "address")
     WebElement address_id;
+    @FindBy(id = "review-cart-btn")
+    WebElement reviewCartButton_id;
+    @FindBy(id = "cart-item-remove-1763419470235.1038")
+    WebElement remove2ndItem_id;
 
-    public WebAutomationAdvancePage(WebDriver driver) {
+    public Add2ndItemToCart(WebDriver driver) {
         this.driver = driver;
     }
 
-    public void clickWebAutomationAdvanceTab() {
-        new WebDriverWait(driver, Duration.ofSeconds(5)).
-                until(ExpectedConditions.visibilityOf(webAutomationAdvanceTab_id));
-        webAutomationAdvanceTab_id.click();
+    public void selectDeviceFor2ndPhone(String deviceType) {
+        new WebDriverWait(driver, Duration.ofSeconds(5))
+                .until(ExpectedConditions.visibilityOf(deviceType_id));
+        deviceType_id.sendKeys(deviceType);
     }
 
-    public void selectDeviceTypeIfBrandNotClickable(String deviceType) {
-
-        if (isElementClickable()) {
-            throw new AssertionError("Test failed: brand_id is clickable.");
-        } else {
-            new WebDriverWait(driver, Duration.ofSeconds(5))
-                    .until(ExpectedConditions.visibilityOf(deviceType_id));
-            deviceType_id.sendKeys(deviceType);
-        }
-    }
-
-    private boolean isElementClickable() {
-        try {
-            new WebDriverWait(driver, Duration.ofSeconds(5))
-                    .until(ExpectedConditions.elementToBeClickable(nextButton_id));
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    public void selectBrand(String brand) {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView(true);", brand_id);
+    public void selectBrandFor2ndPhone(String brand) {
 
         new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.visibilityOf(brand_id));
         brand_id.sendKeys(brand);
     }
 
-    public void selectStorage(String storageOption) {
+    public void selectStorageFor2ndPhone(String storageOption) {
         switch (storageOption) {
             case "64GB" -> {
                 new WebDriverWait(driver, Duration.ofSeconds(5))
@@ -110,7 +86,7 @@ public class WebAutomationAdvancePage {
         }
     }
 
-    public void selectColor(String color) {
+    public void selectColorFor2ndPhone(String color) {
         new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.visibilityOf(colorDropdown_id));
 
@@ -118,20 +94,20 @@ public class WebAutomationAdvancePage {
         colorSelect.selectByVisibleText(color);
     }
 
-    public void enterQuantity(String quantity) {
+    public void enterQuantityFor2ndPhone(String quantity) {
         new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.visibilityOf(quantity_id));
         quantity_id.clear();
         quantity_id.sendKeys(quantity);
     }
 
-    public void enterAddress(String address) {
+    public void enterAddressFor2ndPhone(String address) {
         new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.visibilityOf(address_id));
         address_id.sendKeys(address);
     }
 
-    public void extractUnitPrice() {
+    public void extractUnitPriceFor2ndPhone() {
 
         stringUnitPriceText = unitPriceValue_id.getText();
         System.out.println("Unit price with R: " + stringUnitPriceText);
@@ -164,14 +140,7 @@ public class WebAutomationAdvancePage {
                 "Actual subtotal does not match expected subtotal.");
 
     }
-
-    public void clickNextButton() {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView(true);", nextButton_id);
-
-        new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.elementToBeClickable(nextButton_id));
-        nextButton_id.click();
+    public void clickReviewCartButton() {
+        reviewCartButton_id.click();
     }
-
 }
