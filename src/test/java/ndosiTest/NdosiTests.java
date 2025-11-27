@@ -239,16 +239,16 @@ public class NdosiTests extends Base {
         reviewCartPage.verifyReviewCartPageIsDisplayed();
     }
 
-//    @Test(dependsOnMethods = "verifyItemsInReviewCartTests")
-//    public void verifyGrandTotalFromCart() {
-//        reviewCartPage.verifyGrandTotalFromCart();
-//    }
-
-    @AfterTest
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
+    @Test(dependsOnMethods = "verifyItemsInReviewCartTests")
+    public void verifyGrandTotalMatchesItemTotalsTests() {
+        reviewCartPage.verifyGrandTotalMatchesItemTotals();
     }
+
+//    @AfterTest
+//    public void tearDown() {
+//        if (driver != null) {
+//            driver.quit();
+//        }
+//    }
 
 }
